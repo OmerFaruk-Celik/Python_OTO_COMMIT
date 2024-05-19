@@ -11,6 +11,7 @@ def generate_ssh_key(key_filename="id_rsa"):
     with open("bilgiler.txt", "r") as f:
       lines = f.readlines()
       email = lines[1].strip()  # İkinci satırı al ve boşlukları temizle
+      print(email)
     subprocess.run(["ssh-keygen", "-t", "rsa", "-f", key_filename, "-N", "", "-C", email])
     # Sadece kamu anahtarını kopyala ve kaydet
     with open(key_filename + ".pub", "r") as pub_file:
