@@ -2,9 +2,7 @@ import os
 import time
 import subprocess
 from datetime import datetime
-
-
-
+#
 def update(repo):
     """
     GitHub deponuzun kök dizinine geçerek commit ve push işlemleri yapar.
@@ -43,12 +41,17 @@ def en_son_değişiklik_zamanı(dosya_yolu):
         print(f"Hata: {dosya_yolu} dosyası bulunamadı.")
         return None
 
+# Bu script'in çalıştığı dizini al
+script_dizin = os.path.dirname(os.path.abspath(__file__))
+
 # Ev dizinini al
 ev_dizin = os.path.expanduser("~")
 
 # GitHub dizinini birleştir (evrensel)
 github_dizin = os.path.join(ev_dizin, "github")
-zaman_d = os.path.join(github_dizin, "Python_OTO_COMMIT","zaman_damgasi.txt")
+
+# Zaman damgası dosyasını birleştir (evrensel)
+zaman_d = os.path.join(github_dizin, "Python_OTO_COMMIT", "zaman_damgasi.txt")
 
 # Zaman damgası dosyasını oku
 try:
