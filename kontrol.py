@@ -2,7 +2,7 @@ import os
 import time
 import subprocess
 from datetime import datetime
-#
+
 def update(repo):
     """
     GitHub deponuzun kök dizinine geçerek commit ve push işlemleri yapar.
