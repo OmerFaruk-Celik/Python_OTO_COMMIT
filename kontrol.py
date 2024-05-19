@@ -7,9 +7,11 @@ def update(repo):
     """
     GitHub deponuzun kök dizinine geçerek commit ve push işlemleri yapar.
     """
-    print(repo)
+    current_directory = os.getcwd()
+    print(current_directory)
     os.chdir(repo)  # GitHub deponuzun kök dizinine geç
-
+    current_directory = os.getcwd()
+    print(current_directory)
     # Git add, commit ve push işlemleri
     subprocess.run(["git", "fetch", "origin"])  # En son değişiklikleri indir
     subprocess.run(["git", "add", "."])
