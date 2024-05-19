@@ -40,7 +40,6 @@ ev_dizin = os.path.expanduser("~")
 
 # GitHub dizinini birleştir
 github_dizin = os.path.join(ev_dizin, "github")
-os.chdir(github_dizin)
 zaman_d = os.path.join(github_dizin, "Python_OTO_COMMIT","zaman_damgasi.txt")
 
 # Zaman damgası dosyasını oku
