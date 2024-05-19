@@ -8,3 +8,26 @@ fatal: Could not read from remote repository.
 
 Please make sure you have the correct access rights
 and the repository exists.
+[main c3c27c2] python oto commit
+ 6 files changed, 365 insertions(+)
+ create mode 100644 bilgiler.txt
+ create mode 100644 keygen.py
+ create mode 100755 kontrol.py
+ create mode 100644 output.log
+ create mode 100644 repo.py
+ create mode 100755 zaman_damgasi.txt
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
