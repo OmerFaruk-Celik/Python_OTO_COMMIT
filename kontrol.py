@@ -20,7 +20,7 @@ def update(repo):
     if result.returncode != 0:
         print("Git push işlemi başarısız oldu.")
 
-    os.chdir(github_dizin)  # Çalışma dizinini başlangıç dizinine geri döndür
+    
 
 def en_son_değişiklik_zamanı(dosya_yolu):
     """Dosyanın son değiştirilme, oluşturulma ve erişim zamanlarından en büyük olanını döndürür."""
