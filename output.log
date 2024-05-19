@@ -8,3 +8,21 @@ fatal: Could not read from remote repository.
 
 Please make sure you have the correct access rights
 and the repository exists.
+[main e161ceb] python oto commit
+ 2 files changed, 11 insertions(+), 51 deletions(-)
+ rewrite output.log (79%)
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
