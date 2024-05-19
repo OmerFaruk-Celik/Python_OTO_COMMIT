@@ -9,6 +9,7 @@ def update(repo):
     """
     current_directory = os.getcwd()
     
+    
     print(current_directory)
     os.chdir(repo)  # GitHub deponuzun kök dizinine geç
     current_directory = os.getcwd()
