@@ -3,12 +3,15 @@ import os
 
 def generate_ssh_key(key_filename="id_rsa"):
   """SSH anahtar çiftini oluşturur ve kamu anahtarını bir dosyaya kaydeder.
-
+  
   Args:
     key_filename: Özel anahtarın dosya adı. Kamu anahtarı otomatik olarak aynı isimle ".pub" uzantılı olarak oluşturulur.
   """
   try:
-    subprocess.run(["ssh-keygen", "-t", "rsa", "-f", key_filename, "-N", ""])
+    with open("bilgiler.txt", "r") as f:
+      lines = f.readlines()
+      email = lines[1].strip()  # İkinci satırı al ve boşlukları temizle
+    subprocess.run(["ssh-keygen", "-t", "rsa", "-f", key_filename, "-N", "", "-C", email])
     # Sadece kamu anahtarını kopyala ve kaydet
     with open(key_filename + ".pub", "r") as pub_file:
       public_key = pub_file.read()
@@ -16,7 +19,9 @@ def generate_ssh_key(key_filename="id_rsa"):
       key_file.write(public_key)
     print(f"SSH anahtar çifti oluşturuldu. Kamu anahtar {key_filename} dosyasına kaydedildi.")
   except FileNotFoundError:
-    print("ssh-keygen komutu bulunamadı. Lütfen SSH keygen'in kurulu olduğundan emin olun.")
+    print("bilgiler.txt dosyası bulunamadı. Lütfen dosyanın var olduğundan emin olun.")
+  except IndexError:
+    print("bilgiler.txt dosyasında e-posta adresi bulunamadı. Lütfen dosyayı kontrol edin.")
   except Exception as e:
     print(f"Bir hata oluştu: {e}")
 
