@@ -67,6 +67,7 @@ for root, dirs, files in os.walk(github_dizin):
             continue
         
         dosya_yolu = os.path.join(root, dosya)
+        os.chdir(root)
         repo = root
 
         # Dosyanın en son değişiklik zamanını al
