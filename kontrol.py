@@ -8,6 +8,7 @@ def update(repo):
     GitHub deponuzun kök dizinine geçerek commit ve push işlemleri yapar.
     """
     current_directory = os.getcwd()
+    
     print(current_directory)
     os.chdir(repo)  # GitHub deponuzun kök dizinine geç
     current_directory = os.getcwd()
