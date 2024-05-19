@@ -3,22 +3,3 @@ fatal: Could not read from remote repository.
 
 Please make sure you have the correct access rights
 and the repository exists.
-[main f400c8e] python oto commit
- 8 files changed, 6 insertions(+), 1 deletion(-)
- mode change 100644 => 100755 README.md
- mode change 100644 => 100755 bilgiler.txt
- mode change 100644 => 100755 keygen.py
- mode change 100644 => 100755 main.py
- mode change 100644 => 100755 output.log
- mode change 100644 => 100755 repo.py
- mode change 100644 => 100755 requirements.txt
-git@github.com: Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-git@github.com: Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
