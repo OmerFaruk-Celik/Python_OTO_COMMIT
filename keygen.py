@@ -37,8 +37,8 @@ if __name__ == "__main__":
   # anahtar dosyasını .ssh dizinine taşı
   source_file = "id_rsa"
   destination_file = os.path.join(ssh_dir, source_file)
-  os.rename(source_file, destination_file)
-
-  source_file = "id_rsa.pub"
-  destination_file = os.path.join(ssh_dir, source_file)
-  os.rename(source_file, destination_file)
+  if os.path.exists(source_file):
+    os.rename(source_file, destination_file)
+    source_file = "id_rsa.pub"
+    destination_file = os.path.join(ssh_dir, source_file)
+    os.rename(source_file, destination_file)
