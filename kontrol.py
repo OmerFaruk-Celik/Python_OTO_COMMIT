@@ -63,8 +63,8 @@ for root, dirs, files in os.walk(github_dizin):
     dirs[:] = [d for d in dirs if d != ".gitingore"]
     for dosya in files:
         # Gizli dosyaları ve belirli dosyaları atla
-        #if dosya=="keygen.py" or dosya=="repo.py" or dosya=="bilgiler.txt" or dosya=="main.py" or dosya=="requirements.txt" or dosya=="README.md" or dosya.startswith(".") or dosya == "kontrol.py" or dosya == "zaman.py" or dosya == "zaman_damgasi.txt" or dosya=="deneme.py" or dosya=="output.log":
-        #    continue
+        if  dosya=="zaman_damgasi.txt" or dosya=="bilgiler.txt" or dosya=="output.log":
+            continue
         
         dosya_yolu = os.path.join(root, dosya)
         repo = root

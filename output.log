@@ -1,28 +1,4 @@
-git@github.com: Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-git@github.com: Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-[main c2210fe] python oto commit
- 2 files changed, 11 insertions(+), 29 deletions(-)
- rewrite output.log (64%)
-git@github.com: Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-git@github.com: Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-git@github.com: Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
+Traceback (most recent call last):
+  File "/home/celik/github/Python_OTO_COMMIT/kontrol.py", line 66, in <module>
+    if  depo=="zaman_damgasi.txt" or dosya=="bilgiler.txt" or dosya=="output.log":
+NameError: name 'depo' is not defined
