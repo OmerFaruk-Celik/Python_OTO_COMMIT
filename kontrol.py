@@ -7,22 +7,24 @@ def update(repo):
     """
     GitHub deponuzun kök dizinine geçerek commit ve push işlemleri yapar.
     """
-    current_directory = os.getcwd()
-    
-    
-    print(current_directory)
-    os.chdir(repo)  # GitHub deponuzun kök dizinine geç
-    current_directory = os.getcwd()
-    print(current_directory)
-    # Git add, commit ve push işlemleri
-    subprocess.run(["git", "fetch", "origin"])  # En son değişiklikleri indir
-    subprocess.run(["git", "add", "."])
-    subprocess.run(["git", "commit", "-m", "python oto commit"])
-    result = subprocess.run(["git", "push", "-u", "origin", "main"])
-    if result.returncode != 0:
-        print("Git push işlemi başarısız oldu.")
+    # Mevcut dizini kaydet
+    original_directory = os.getcwd()
 
-    
+    try:
+        # GitHub deponuzun kök dizinine geç
+        os.chdir(repo)  
+        
+        # Git add, commit ve push işlemleri
+        subprocess.run(["git", "fetch", "origin"])  # En son değişiklikleri indir
+        subprocess.run(["git", "add", "."])
+        subprocess.run(["git", "commit", "-m", "python oto commit"])
+        result = subprocess.run(["git", "push", "-u", "origin", "main"])
+        if result.returncode != 0:
+            print("Git push işlemi başarısız oldu.")
+
+    finally:
+        # Başlangıç dizinine geri dön
+        os.chdir(original_directory)
 
 def en_son_değişiklik_zamanı(dosya_yolu):
     """Dosyanın son değiştirilme, oluşturulma ve erişim zamanlarından en büyük olanını döndürür."""
@@ -42,7 +44,7 @@ def en_son_değişiklik_zamanı(dosya_yolu):
 # Ev dizinini al
 ev_dizin = os.path.expanduser("~")
 
-# GitHub dizinini birleştir
+# GitHub dizinini birleştir (evrensel)
 github_dizin = os.path.join(ev_dizin, "github")
 zaman_d = os.path.join(github_dizin, "Python_OTO_COMMIT","zaman_damgasi.txt")
 
