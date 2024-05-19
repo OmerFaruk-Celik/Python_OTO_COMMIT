@@ -67,8 +67,7 @@ for root, dirs, files in os.walk(github_dizin):
             continue
         
         dosya_yolu = os.path.join(root, dosya)
-        os.chdir(root)
-        repo = root
+        
 
         # Dosyanın en son değişiklik zamanını al
         z = en_son_değişiklik_zamanı(dosya_yolu)
@@ -82,13 +81,7 @@ for root, dirs, files in os.walk(github_dizin):
                     if z > max_zaman:
                         print(f"{dosya_yolu}: True, {z}")
                         max_zaman = z  # En büyük zaman damgasını güncelle
-
-                        # Git fetch'i ekledik
-                        os.chdir(repo)
-                        subprocess.run(["git", "fetch", "origin"])
-                        os.chdir(github_dizin) 
-
-                        update(repo)  # Update fonksiyonunu çağır
+                        update(root)  # Update fonksiyonunu çağır
                 except ValueError:
                     print(f"Hata: {dosya_yolu} için geçersiz zaman damgası.")
 
