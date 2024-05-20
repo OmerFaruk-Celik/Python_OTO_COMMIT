@@ -2,7 +2,7 @@ import os
 import time
 import subprocess
 from datetime import datetime
-
+#güncellendi
 def update(repo):
     """
     GitHub deponuzun kök dizinine geçerek commit ve push işlemleri yapar.
@@ -71,6 +71,7 @@ max_zaman = zaman_damgasi
 for root, dirs, files in os.walk(github_dizin):
     dirs[:] = [d for d in dirs if d != ".git"]  # .git dizinini filtrele
     dirs[:] = [d for d in dirs if d != ".gitingore"]
+    dirs[:] = [d for d in dirs if d != "Python_OTO_COMMIT"]
     for dosya in files:
         # Gizli dosyaları ve belirli dosyaları atla
         if  dosya=="zaman_damgasi.txt" or dosya=="bilgiler.txt" or dosya=="output.log":
