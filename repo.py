@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 import subprocess
 import tkinter as tk
@@ -20,7 +21,7 @@ def get_user_info():
         return
 
     # Ev dizini ile github klasörünü birleştirin
-    bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "bilgiler.txt")
+    bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
 
     # Dosyayı oku ve önceki değerleri al
     try:
@@ -61,7 +62,7 @@ def create_project():
     # Kullanıcı bilgileri dosyasından oku
     try:
         # Ev dizini ile github klasörünü birleştirin
-        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "bilgiler.txt")
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
         with open(bilgiler_dosyasi, "r") as f:
             username, email, token = f.readline().strip().split(",")
     except FileNotFoundError:
@@ -121,12 +122,14 @@ def create_project():
         messagebox.showinfo("Başarılı", "Proje başarıyla oluşturuldu.")
     except Exception as e:
         messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+        
+    os.chdir("..")
 
 def generate_rsa():
     """keygen.py dosyasını çalıştırır."""
     try:
         # Ev dizini ile github klasörünü birleştirin
-        keygen_dosyasi = os.path.join(os.path.expanduser("~"), "github", "keygen.py")
+        keygen_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "keygen.py")
         subprocess.run(["python", keygen_dosyasi])
         # RSA değerini güncellemek için update_rsa_text()'i çağırın
         update_rsa_text() 
@@ -158,7 +161,58 @@ def copy_rsa():
         messagebox.showinfo("Bilgi", "RSA anahtarı panoya kopyalandı.")
     except Exception as e:
         messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
-        
+
+
+
+
+def download_repos():
+    """Tüm repoları indirir."""
+    try:
+        # Ev dizini ile github klasörünü birleştirin
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+        with open(bilgiler_dosyasi, "r") as f:
+            username, _, token = f.readline().strip().split(",")
+
+        # Download işlemini başlat
+        download_repos_from_github(token, username)
+
+        messagebox.showinfo("Bilgi", "Tüm repolar indirildi.")
+    except Exception as e:
+        messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+
+def download_repos_from_github(token, username):
+    """Belirtilen token ve kullanıcı adı ile GitHub'dan belirtilen repoları indirir."""
+
+    gh = Github(token)
+    user = gh.get_user(username)
+
+    # ~/github dizinini kontrol et
+    github_dir = os.path.expanduser("~/github")
+    if not os.path.exists(github_dir):
+        os.makedirs(github_dir)
+
+    for repo in user.get_repos():
+        repo_name = repo.name
+        repo_url = f"git@github.com:{username}/{repo_name}.git"  # Git URL'si
+
+        # Repo'nun zaten indirilmiş olup olmadığını kontrol et
+        repo_path = os.path.join(github_dir, repo_name)
+        if os.path.exists(repo_path):
+            print(f"{repo_name} adlı repo zaten indirilmiş.")
+            continue
+
+        # Repo'yu indir
+        try:
+            subprocess.run(["git", "clone", repo_url])
+            print(f"{repo_name} adlı repo başarıyla indirildi.")
+        except Exception as e:
+            print(f"{repo_name} adlı repo indirme sırasında hata oluştu: {e}")
+            
+            
+            
+            
+            
+            
         
 calisma_dizini = os.path.join(os.path.expanduser("~"), "github")        
 os.chdir(calisma_dizini)
@@ -213,5 +267,9 @@ generate_button.grid(row=7, column=1, padx=5, pady=5)
 
 # Başlangıçta RSA değerini güncelle
 update_rsa_text()
+
+# Download All Repos butonu
+download_button = ttk.Button(window, text="Download All Repos", command=download_repos)
+download_button.grid(row=8, column=0, columnspan=2, padx=5, pady=10)
 
 window.mainloop()
