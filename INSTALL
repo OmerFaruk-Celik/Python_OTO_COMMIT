@@ -29,7 +29,8 @@ echo "Kullanıcı Adı,E-Posta,GITHUB_TOKEN" > ~/github/Python_OTO_COMMIT/bilgil
 echo "Lütfen bilgiler.txt dosyasını düzenleyin ve bilgilerinizi ekleyin."
 echo "Token'ı GitHub'dan oluşturun."
 echo "Daha sonra script'i çalıştırın."
-
+rm -rf github/Python_OTO_COMMIT
 echo "INSTALL işlemi tamamlandı! terminale repo yazarak kullanıcı arayüzüne ulaşabilirsiniz."
+
 repo
 
