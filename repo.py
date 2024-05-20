@@ -4,11 +4,10 @@ import subprocess
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-import pyperclip  
+import pyperclip
 from github import Github
 import re
 from github3 import GitHub
-
 
 def get_user_info():
     """Kullanıcı adını, e-postasını ve token'ı alır."""
@@ -24,7 +23,7 @@ def get_user_info():
         return
 
     # Ev dizini ile github klasörünü birleştirin
-    bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
+    bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
 
     # Dosyayı oku ve önceki değerleri al
     try:
@@ -65,7 +64,7 @@ def create_project():
     # Kullanıcı bilgileri dosyasından oku
     try:
         # Ev dizini ile github klasörünü birleştirin
-        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
         with open(bilgiler_dosyasi, "r") as f:
             username, email, token = f.readline().strip().split(",")
     except FileNotFoundError:
@@ -79,7 +78,6 @@ def create_project():
             return
 
     try:
-		
         # GitHub API'sine bağlan
         g = Github(token)
         user = g.get_user()
@@ -93,11 +91,8 @@ def create_project():
             # Eğer depo zaten varsa hata mesajı göster
             if "name already exists" in str(e):
                 messagebox.showinfo("Bilgi", f"Depo zaten var! Zaten var olan bir depoya erişmek için 'git clone' kullanabilirsiniz.")
-        
 
         # git clone ile kopyala
-        
-        
         subprocess.run(["git", "clone", f"git@github.com:{username}/{repo_name}.git"])
         os.chdir(repo_name)
 
@@ -125,17 +120,17 @@ def create_project():
         messagebox.showinfo("Başarılı", "Proje başarıyla oluşturuldu.")
     except Exception as e:
         messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
-        
+
     os.chdir("..")
 
 def generate_rsa():
     """keygen.py dosyasını çalıştırır."""
     try:
         # Ev dizini ile github klasörünü birleştirin
-        keygen_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "keygen.py")
+        keygen_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "keygen.py")
         subprocess.run(["python", keygen_dosyasi])
         # RSA değerini güncellemek için update_rsa_text()'i çağırın
-        update_rsa_text() 
+        update_rsa_text()
         messagebox.showinfo("Bilgi", "RSA anahtarı oluşturuldu.")
     except Exception as e:
         messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
@@ -160,11 +155,11 @@ def copy_rsa():
     """RSA değerini panoya kopyalar."""
     try:
         rsa_value = rsa_label.get("1.0", tk.END)
-        pyperclip.copy(rsa_value) 
+        pyperclip.copy(rsa_value)
         messagebox.showinfo("Bilgi", "RSA anahtarı panoya kopyalandı.")
     except Exception as e:
         messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
-       
+
 def download_repos():
     """Tüm repoları indirir."""
     try:
@@ -207,24 +202,22 @@ def download_repos_from_github(token, username):
             print(f"{repo_name} adlı repo başarıyla indirildi.")
         except Exception as e:
             print(f"{repo_name} adlı repo indirme sırasında hata oluştu: {e}")
-            
-             
-        
+
 def check_user_info():
     """Kullanıcı bilgileri dosyasını kontrol eder ve sonuçları gösterir."""
     try:
         # Ev dizini ile github klasörünü birleştirin
-        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
         with open(bilgiler_dosyasi, "r") as f:
             username, email, token = f.readline().strip().split(",")
 
         # Kontrol sonuçlarını göster
         username_status_label.config(text=f"Kullanıcı Adı: {username}", foreground="green")
         email_status_label.config(text=f"E-Posta: {email}", foreground="green")
-        if len(token) >50:
-            token="Available"
+        if len(token) > 50:
+            token = "Available"
         else:
-            token="No Found Any Token!"						
+            token = "No Found Any Token!"
         token_status_label.config(text=f"Token: {token}", foreground="green")
 
     except FileNotFoundError:
@@ -234,114 +227,66 @@ def check_user_info():
         token_status_label.config(text="Token:", foreground="red")
     except Exception as e:
         messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
-        
-        
-calisma_dizini = os.path.join(os.path.expanduser("~"), "github")        
-os.chdir(calisma_dizini)
-# Tkinter Penceresi Oluştur
-window = tk.Tk()
-window.title("GitHub Proje Oluşturucu")
 
-# Kullanıcı Bilgileri
-username_label = ttk.Label(window, text="GitHub Kullanıcı Adı:")
-username_label.grid(row=0, column=0, padx=5, pady=5)
-username_entry = ttk.Entry(window)
-username_entry.grid(row=0, column=1, padx=5, pady=5)
+def sil_repo(token, username, repo_name):
+    """Belirtilen token ve kullanıcı adı ile GitHub'dan belirtilen repoyu siler."""
+    gh = GitHub(token=token)
 
-email_label = ttk.Label(window, text="E-Posta:")
-email_label.grid(row=1, column=0, padx=5, pady=5)
-email_entry = ttk.Entry(window)
-email_entry.grid(row=1, column=1, padx=5, pady=5)
-
-token_label = ttk.Label(window, text="GitHub Personal Access Token:")
-token_label.grid(row=2, column=0, padx=5, pady=5)
-token_entry = ttk.Entry(window, show="*")
-token_entry.grid(row=2, column=1, padx=5, pady=5)
-
-save_button = ttk.Button(window, text="Kaydet", command=get_user_info)
-save_button.grid(row=3, column=0, columnspan=2, padx=5, pady=10)
-
-# Kontrol Durumunu Gösteren Label'lar
-username_status_label = ttk.Label(window, text="", foreground="black")
-username_status_label.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
-
-email_status_label = ttk.Label(window, text="", foreground="black")
-email_status_label.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
-
-token_status_label = ttk.Label(window, text="", foreground="black")
-token_status_label.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
-
-# Proje Oluşturma
-repo_name_label = ttk.Label(window, text="Repo Adı:")
-repo_name_label.grid(row=7, column=0, padx=5, pady=5)
-repo_name_entry = ttk.Entry(window)
-repo_name_entry.grid(row=7, column=1, padx=5, pady=5)
-
-create_button = ttk.Button(window, text="Proje Oluştur", command=create_project)
-create_button.grid(row=8, column=0, columnspan=2, padx=5, pady=10)
-
-# RSA Anahtarı Bölümü
-rsa_label = tk.Text(window, wrap=tk.WORD, height=3, width=50)  # tk.Text kullanarak oluştur
-rsa_label.grid(row=9, column=0, padx=5, pady=5, sticky="nsew")
-
-# Scrollbar oluşturma
-scrollbar = tk.Scrollbar(window, command=rsa_label.yview)
-scrollbar.grid(row=9, column=1, sticky="ns")
-
-# Label'ın scrollbar'ı kullanmasını sağlama
-rsa_label.config(yscrollcommand=scrollbar.set)
-
-copy_button = ttk.Button(window, text="Kopyala", command=copy_rsa)
-copy_button.grid(row=10, column=0, padx=5, pady=5)
-
-generate_button = ttk.Button(window, text="Generate RSA", command=generate_rsa)
-generate_button.grid(row=10, column=1, padx=5, pady=5)
-
-# Başlangıçta RSA değerini güncelle
-update_rsa_text()
-
-# Download All Repos butonu
-download_button = ttk.Button(window, text="Download All Repos", command=download_repos)
-download_button.grid(row=11, column=0, columnspan=2, padx=5, pady=10)
-
-# Repo Listesi Bölümü
-repo_listbox = tk.Listbox(window, width=30, height=10)
-repo_listbox.grid(row=0, column=2, rowspan=10, padx=5, pady=5, sticky="nsew")
-
-# Scrollbar oluşturma
-repo_scrollbar = tk.Scrollbar(window, command=repo_listbox.yview)
-repo_scrollbar.grid(row=0, column=3, rowspan=10, sticky="ns")
-
-# Listbox'ın scrollbar'ı kullanmasını sağlama
-repo_listbox.config(yscrollcommand=repo_scrollbar.set)
-
-# Repo Listesini Güncelleme Fonksiyonu
-def update_repo_list():
-    """GitHub'dan repoları alır ve listbox'a ekler."""
     try:
-        #get_user_info()
-        check_user_info()
-        update_rsa_text()
-		
-        # Ev dizini ile github klasörünü birleştirin
-        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
-        with open(bilgiler_dosyasi, "r") as f:
-            username, _, token = f.readline().strip().split(",")
+        repo = gh.repository(username, repo_name)
+        repo.delete()
+        print(f"{repo_name} adlı repo başarıyla silindi.")
 
-        gh = Github(token)
-        user = gh.get_user(username)
+        # Yerel dizindeki klasörü sil
+        repo_path = os.path.join(os.path.expanduser("~/github"), repo_name)
+        if os.path.exists(repo_path):
+            subprocess.run(["rm", "-rf", repo_path])
+            print(f"{repo_path} klasörü başarıyla silindi.")
 
-        repo_listbox.delete(0, tk.END)  # Mevcut listeyi temizle
-        for repo in user.get_repos():
-            repo_listbox.insert(tk.END, repo.name)
-
-    except FileNotFoundError:
-        messagebox.showerror("Hata", "bilgiler.txt dosyası bulunamadı. Lütfen dosyayı kontrol edin.")
     except Exception as e:
-        messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
-        
-        
-        
+        print(f"Repo silinirken hata oluştu: {e}")
+
+def sil_repo_arayuz():
+    """Repo silme arayüzünü oluşturur."""
+    def sil():
+        """Repo silme işlemini başlatır."""
+        repo_name = repo_entry.get()
+        if not repo_name:
+            messagebox.showerror("Hata", "Lütfen repo adını girin.")
+            return
+
+        # Kullanıcı bilgileri dosyasından oku
+        try:
+            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+            with open(bilgiler_dosyasi, "r") as f:
+                username, _, token = f.readline().strip().split(",")
+
+            # Token ve kullanıcı adının mevcut olup olmadığını kontrol et
+            if not username or not token:
+                messagebox.showerror("Hata", "Lütfen önce kullanıcı bilgilerini girin.")
+                return
+
+            sil_repo(token, username, repo_name)
+            messagebox.showinfo("Bilgi", f"{repo_name} adlı repo başarıyla silindi.")
+            repo_entry.delete(0, tk.END)
+
+        except FileNotFoundError:
+            messagebox.showerror("Hata", "Kullanıcı bilgileri dosyası bulunamadı.")
+        except Exception as e:
+            messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+
+    # Pencere oluştur
+    sil_pencere = tk.Toplevel(window)
+    sil_pencere.title("Repo Sil")
+
+    repo_label = ttk.Label(sil_pencere, text="Repo Adı:")
+    repo_label.grid(row=0, column=0, padx=5, pady=5)
+    repo_entry = ttk.Entry(sil_pencere)
+    repo_entry.grid(row=0, column=1, padx=5, pady=5)
+
+    sil_button = ttk.Button(sil_pencere, text="Sil", command=sil)
+    sil_button.grid(row=1, column=0, columnspan=2, padx=5, pady=10)
+
 def fork_repo(token, username, repo_path):
     """Belirtilen token ve kullanıcı adı ile GitHub'dan belirtilen repoyu forklar."""
 
@@ -366,7 +311,7 @@ def fork_project():
     """Forklama işlemini başlatır."""
     try:
         # Ev dizini ile github klasörünü birleştirin
-        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
         with open(bilgiler_dosyasi, "r") as f:
             username, _, token = f.readline().strip().split(",")
 
@@ -381,24 +326,271 @@ def fork_project():
     except Exception as e:
         messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
 
+def fork_repo_arayuz():
+    """Repo forklama arayüzünü oluşturur."""
+    def fork():
+        """Repo forklama işlemini başlatır."""
+        repo_path = fork_repo_entry.get()
+        if not repo_path:
+            messagebox.showerror("Hata", "Lütfen forklanacak repo'nun URL'sini veya yolunu girin.")
+            return
+
+        # Kullanıcı bilgileri dosyasından oku
+        try:
+            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+            with open(bilgiler_dosyasi, "r") as f:
+                username, _, token = f.readline().strip().split(",")
+
+            # Token ve kullanıcı adının mevcut olup olmadığını kontrol et
+            if not username or not token:
+                messagebox.showerror("Hata", "Lütfen önce kullanıcı bilgilerini girin.")
+                return
+
+            fork_repo(token, username, repo_path)
+            messagebox.showinfo("Bilgi", "Repo başarıyla forklandı.")
+            fork_repo_entry.delete(0, tk.END)
+
+        except FileNotFoundError:
+            messagebox.showerror("Hata", "Kullanıcı bilgileri dosyası bulunamadı.")
+        except Exception as e:
+            messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+
+    # Pencere oluştur
+    fork_pencere = tk.Toplevel(window)
+    fork_pencere.title("Repo Forkla")
+
+    fork_repo_label = ttk.Label(fork_pencere, text="Repo URL'si:")
+    fork_repo_label.grid(row=0, column=0, padx=5, pady=5)
+    fork_repo_entry = ttk.Entry(fork_pencere)
+    fork_repo_entry.grid(row=0, column=1, padx=5, pady=5)
+
+    fork_button = ttk.Button(fork_pencere, text="Forkla", command=fork)
+    fork_button.grid(row=1, column=0, columnspan=2, padx=5, pady=10)
+default = os.path.join(os.path.expanduser("~"), "github")
+def update_repo_list(path=default):
+    """GitHub'dan repoları alır ve listbox'a ekler."""
+    try:
+        #get_user_info()
+        check_user_info()
+        update_rsa_text()
+		
+        # Ev dizini ile github klasörünü birleştirin
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
+        with open(bilgiler_dosyasi, "r") as f:
+            username, _, token = f.readline().strip().split(",")
+
+        gh = Github(token)
+        user = gh.get_user(username)
+
+        repo_listbox.delete(0, tk.END)  # Mevcut listeyi temizle
+        if path==default:
+            os.chdir(path)			
+            for repo in user.get_repos():
+                repo_listbox.insert(tk.END, repo.name)
+        else:
+            for files in os.listdir(path):
+                repo_listbox.insert(tk.END, files)			    	
+    except FileNotFoundError:
+        messagebox.showerror("Hata", "bilgiler.txt dosyası bulunamadı. Lütfen dosyayı kontrol edin.")
+    except Exception as e:
+        messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+
+
+# Sağ Tık Menüsü Fonksiyonları
+def sil_secilen_repo():
+    """Seçilen repoyu silmek için kullanılır."""
+    secilen_repo = repo_listbox.get(tk.ANCHOR)
+    if secilen_repo:
+        # Kullanıcı bilgileri dosyasından oku
+        try:
+            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+            with open(bilgiler_dosyasi, "r") as f:
+                username, _, token = f.readline().strip().split(",")
+
+            # Token ve kullanıcı adının mevcut olup olmadığını kontrol et
+            if not username or not token:
+                messagebox.showerror("Hata", "Lütfen önce kullanıcı bilgilerini girin.")
+                return
+
+            sil_repo(token, username, secilen_repo)
+            messagebox.showinfo("Bilgi", f"{secilen_repo} adlı repo başarıyla silindi.")
+            repo_listbox.delete(tk.ANCHOR)  # Listbox'tan repoyu sil
+
+        except FileNotFoundError:
+            messagebox.showerror("Hata", "Kullanıcı bilgileri dosyası bulunamadı.")
+        except Exception as e:
+            messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+
+def kopyala_secilen_repo():
+    """Seçilen repo adını panoya kopyalar."""
+    secilen_repo = repo_listbox.get(tk.ANCHOR)
+    if secilen_repo:
+        pyperclip.copy(secilen_repo)
+        messagebox.showinfo("Bilgi", f"{secilen_repo} adlı repo panoya kopyalandı.")
+
+def duzenle_secilen_repo():
+    """Seçilen repoyu düzenlemek için kullanılır."""
+    secilen_repo = repo_listbox.get(tk.ANCHOR)
+    if secilen_repo:
+        messagebox.showinfo("Bilgi", f"{secilen_repo} adlı repo düzenleniyor...")
+
+
+
+def sag_tik_goster(event):
+    """Sağ tıklama üzerine menüyü gösterir."""
+    try:
+        repo_listbox.selection_set(repo_listbox.nearest(event.y))  # En yakın öğeyi seç
+    except tk.TclError:
+        pass  # Eğer tıklama listbox'ın dışındaysa hata yakala
+    sag_tik_menu.post(event.x_root, event.y_root)
+
+
+def gir_repo(event):
+    """Seçilen repo klasörüne girer."""
+    secilen_repo = repo_listbox.get(tk.ANCHOR)
+    if secilen_repo:
+        bulundugu_dizin=os.getcwd()
+        repo_yolu = os.path.join(bulundugu_dizin, secilen_repo)
+        if os.path.isdir(repo_yolu):
+            os.chdir(repo_yolu)  # Klasöre gir
+            print(f"{secilen_repo} adlı klasöre girildi.")
+            # Repo listesini güncellemek için update_repo_list'i çağırın
+            
+            update_repo_list(repo_yolu)  
+        else:
+            messagebox.showerror("Hata", f"{secilen_repo} adlı klasör bulunamadı.")
+
+def geri_al():
+	
+	os.chdir("..")
+	bulundugu_dizin=os.getcwd()
+	update_repo_list(bulundugu_dizin)
+
+calisma_dizini = os.path.join(os.path.expanduser("~"), "github")
+os.chdir(calisma_dizini)
+# Tkinter Penceresi Oluştur
+window = tk.Tk()
+window.title("GitHub Proje Oluşturucu")
+
+# Kullanıcı Bilgileri
+user_frame = ttk.Frame(window)
+user_frame.grid(row=0, column=0, padx=5, pady=5, sticky="nw")
+
+username_label = ttk.Label(user_frame, text="GitHub Kullanıcı Adı:")
+username_label.grid(row=0, column=0, padx=5, pady=5)
+username_entry = ttk.Entry(user_frame)
+username_entry.grid(row=0, column=1, padx=5, pady=5)
+
+email_label = ttk.Label(user_frame, text="E-Posta:")
+email_label.grid(row=1, column=0, padx=5, pady=5)
+email_entry = ttk.Entry(user_frame)
+email_entry.grid(row=1, column=1, padx=5, pady=5)
+
+token_label = ttk.Label(user_frame, text="GitHub Personal Access Token:")
+token_label.grid(row=2, column=0, padx=5, pady=5)
+token_entry = ttk.Entry(user_frame, show="*")
+token_entry.grid(row=2, column=1, padx=5, pady=5)
+
+save_button = ttk.Button(user_frame, text="Kaydet", command=get_user_info)
+save_button.grid(row=3, column=0, columnspan=2, padx=5, pady=10)
+
+# Kontrol Durumunu Gösteren Label'lar
+username_status_label = ttk.Label(user_frame, text="", foreground="black")
+username_status_label.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
+
+email_status_label = ttk.Label(user_frame, text="", foreground="black")
+email_status_label.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
+
+token_status_label = ttk.Label(user_frame, text="", foreground="black")
+token_status_label.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
+
+# Proje Oluşturma
+project_frame = ttk.Frame(window)
+project_frame.grid(row=7, column=0, padx=5, pady=5, sticky="nw")
+
+repo_name_label = ttk.Label(project_frame, text="Repo Adı:")
+repo_name_label.grid(row=0, column=0, padx=5, pady=5)
+repo_name_entry = ttk.Entry(project_frame)
+repo_name_entry.grid(row=0, column=1, padx=5, pady=5)
+
+create_button = ttk.Button(project_frame, text="Proje Oluştur", command=create_project)
+create_button.grid(row=1, column=0, columnspan=2, padx=5, pady=10)
+
+# RSA Anahtarı Bölümü
+rsa_frame = ttk.Frame(window)
+rsa_frame.grid(row=8, column=0, padx=5, pady=5, sticky="nw")
+
+rsa_label = tk.Text(rsa_frame, wrap=tk.WORD, height=2, width=30)  # Boyutu küçült
+rsa_label.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
+
+# Scrollbar oluşturma
+scrollbar = tk.Scrollbar(rsa_frame, command=rsa_label.yview)
+scrollbar.grid(row=0, column=1, sticky="ns")
+
+# Label'ın scrollbar'ı kullanmasını sağlama
+rsa_label.config(yscrollcommand=scrollbar.set)
+
+copy_button = ttk.Button(rsa_frame, text="Kopyala", command=copy_rsa)
+copy_button.grid(row=1, column=0, padx=5, pady=5)
+
+generate_button = ttk.Button(rsa_frame, text="Generate RSA", command=generate_rsa)
+generate_button.grid(row=1, column=1, padx=5, pady=5)
+
+# Başlangıçta RSA değerini güncelle
+update_rsa_text()
+
+# Download All Repos butonu
+download_button = ttk.Button(window, text="Download All Repos", command=download_repos)
+download_button.grid(row=9, column=0, columnspan=2, padx=5, pady=10)
+
+# Repo Listesi Bölümü
+repo_listbox = tk.Listbox(window, width=30, height=10)
+repo_listbox.grid(row=0, column=2, rowspan=10, padx=5, pady=5, sticky="nsew")
+
+# Scrollbar oluşturma
+repo_scrollbar = tk.Scrollbar(window, command=repo_listbox.yview)
+repo_scrollbar.grid(row=0, column=3, rowspan=10, sticky="ns")
+
+# Listbox'ın scrollbar'ı kullanmasını sağlama
+repo_listbox.config(yscrollcommand=repo_scrollbar.set)
+
+# Sağ Tık Menüsü
+sag_tik_menu = tk.Menu(repo_listbox, tearoff=0)
+sag_tik_menu.add_command(label="Sil", command=sil_secilen_repo)
+sag_tik_menu.add_command(label="Kopyala", command=kopyala_secilen_repo)
+sag_tik_menu.add_command(label="Düzenle", command=duzenle_secilen_repo)
+
+
+
+
+# Repo listbox'ına sağ tıklama işlemini bağla
+repo_listbox.bind("<Button-3>", sag_tik_goster)
+# Repo listbox'ına çift tıklama işlemini bağla
+repo_listbox.bind("<Double-Button-1>", gir_repo)
+
+
+
+
 # Güncelleme butonu
 update_button = ttk.Button(window, text="Güncelle", command=update_repo_list)
-update_button.grid(row=11, column=2, padx=5, pady=5)
+update_button.grid(row=10, column=2, padx=5, pady=5)
 
+# Geri alma butonu
+geri_button = ttk.Button(window, text="Geri", command=geri_al)
+geri_button.grid(row=10, column=1, padx=5, pady=5)
 
+# Repo Silme
+sil_button = ttk.Button(window, text="Repo Sil", command=sil_repo_arayuz)
+sil_button.grid(row=11, column=0, padx=5, pady=5)
 
-# Repo Forklama Bölümü
-fork_repo_label = ttk.Label(window, text="Forklanacak Repo:")
-fork_repo_label.grid(row=12, column=0, padx=5, pady=5)
-fork_repo_entry = ttk.Entry(window)
-fork_repo_entry.grid(row=12, column=1, padx=5, pady=5)
+# Repo Forklama
+fork_button = ttk.Button(window, text="Repo Forkla", command=fork_repo_arayuz)
+fork_button.grid(row=12, column=0, padx=5, pady=5)
 
-fork_button = ttk.Button(window, text="Forkla", command=fork_project)
-fork_button.grid(row=13, column=0, columnspan=2, padx=5, pady=10)
 # Başlangıçta repo listesini güncelle
 update_repo_list()
 
 # Başlangıçta kontrol et
-check_user_info() 
+check_user_info()
 
 window.mainloop()
