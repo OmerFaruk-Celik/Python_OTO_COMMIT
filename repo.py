@@ -6,6 +6,9 @@ from tkinter import ttk
 from tkinter import messagebox
 import pyperclip  
 from github import Github
+import re
+from github3 import GitHub
+
 
 def get_user_info():
     """Kullanıcı adını, e-postasını ve token'ı alır."""
@@ -336,11 +339,62 @@ def update_repo_list():
         messagebox.showerror("Hata", "bilgiler.txt dosyası bulunamadı. Lütfen dosyayı kontrol edin.")
     except Exception as e:
         messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+        
+        
+        
+def fork_repo(token, username, repo_path):
+    """Belirtilen token ve kullanıcı adı ile GitHub'dan belirtilen repoyu forklar."""
+
+    gh = GitHub(token=token)
+
+    # Repo yolundan owner ve repo adını ayırma
+    repo_path = repo_path.rstrip(".git")  # .git uzantısını kaldır
+    match = re.search(r'github.com/([^/]+)/([^/]+)', repo_path)
+    if match:
+        owner = match.group(1)
+        repo_name = match.group(2)
+    else:
+        print("Geçersiz repo yolu.")
+        return
+
+    # Forklama isteği gönderin
+    fork = gh.repository(owner, repo_name).create_fork()
+
+    print(f"Repo başarıyla forklandı: {fork.html_url}")
+
+def fork_project():
+    """Forklama işlemini başlatır."""
+    try:
+        # Ev dizini ile github klasörünü birleştirin
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
+        with open(bilgiler_dosyasi, "r") as f:
+            username, _, token = f.readline().strip().split(",")
+
+        repo_path = fork_repo_entry.get()
+        if not repo_path:
+            messagebox.showerror("Hata", "Lütfen forklanacak repo'nun URL'sini veya yolunu girin.")
+            return
+
+        fork_repo(token, username, repo_path)
+        messagebox.showinfo("Bilgi", "Repo başarıyla forklandı.")
+
+    except Exception as e:
+        messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
 
 # Güncelleme butonu
 update_button = ttk.Button(window, text="Güncelle", command=update_repo_list)
 update_button.grid(row=11, column=2, padx=5, pady=5)
 
+
+
+# Repo Forklama Bölümü
+fork_repo_label = ttk.Label(window, text="Forklanacak Repo:")
+fork_repo_label.grid(row=12, column=0, padx=5, pady=5)
+fork_repo_entry = ttk.Entry(window)
+fork_repo_entry.grid(row=12, column=1, padx=5, pady=5)
+
+fork_button = ttk.Button(window, text="Forkla", command=fork_project)
+fork_button.grid(row=13, column=0, columnspan=2, padx=5, pady=10)
 # Başlangıçta repo listesini güncelle
 update_repo_list()
 
