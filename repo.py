@@ -58,7 +58,7 @@ def get_user_info():
 
 def create_project():
     """Yeni bir proje klasörü oluşturur ve Git işlemlerini gerçekleştirir."""
-    if rsaState() == "Aktif":
+    if statusRSA:
         repo_name = repo_name_entry.get()
 
         if not repo_name:
@@ -420,14 +420,15 @@ def rsaState():
         return "Hata"
 
 default = os.path.join(os.path.expanduser("~"), "github")
-def update_repo_list(path=default):
+def update_repo_list(path=default,state=False):
     """GitHub'dan repoları alır ve listbox'a ekler."""
     if True:
         try:
             #get_user_info()
             check_user_info()
             update_rsa_text()
-            rsaState()
+            if not state:
+                rsaState()
             
             # Ev dizini ile github klasörünü birleştirin
             bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
@@ -530,7 +531,7 @@ def geri_al():
 	
 	os.chdir("..")
 	bulundugu_dizin=os.getcwd()
-	update_repo_list(bulundugu_dizin)
+	update_repo_list(bulundugu_dizin,True)
 	
 	
 
