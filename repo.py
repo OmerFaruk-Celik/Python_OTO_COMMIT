@@ -521,7 +521,7 @@ def gir_repo(event):
                 print(f"{secilen_repo} adlı klasöre girildi.")
                 # Repo listesini güncellemek için update_repo_list'i çağırın
                 
-                update_repo_list(repo_yolu)  
+                update_repo_list(repo_yolu,True)  
             else:
                 messagebox.showerror("Hata", f"{secilen_repo} adlı klasör bulunamadı.")
     else:
