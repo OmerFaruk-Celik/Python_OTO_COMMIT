@@ -65,5 +65,6 @@ git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git
 cd Python_OTO_COMMIT
 
 chmod +x ./INSTALL
+
 ./INSTALL
 
