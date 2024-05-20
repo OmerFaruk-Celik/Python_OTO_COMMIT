@@ -161,10 +161,7 @@ def copy_rsa():
         messagebox.showinfo("Bilgi", "RSA anahtarı panoya kopyalandı.")
     except Exception as e:
         messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
-
-
-
-
+       
 def download_repos():
     """Tüm repoları indirir."""
     try:
@@ -208,11 +205,33 @@ def download_repos_from_github(token, username):
         except Exception as e:
             print(f"{repo_name} adlı repo indirme sırasında hata oluştu: {e}")
             
-            
-            
-            
-            
-            
+             
+        
+def check_user_info():
+    """Kullanıcı bilgileri dosyasını kontrol eder ve sonuçları gösterir."""
+    try:
+        # Ev dizini ile github klasörünü birleştirin
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
+        with open(bilgiler_dosyasi, "r") as f:
+            username, email, token = f.readline().strip().split(",")
+
+        # Kontrol sonuçlarını göster
+        username_status_label.config(text=f"Kullanıcı Adı: {username}", foreground="green")
+        email_status_label.config(text=f"E-Posta: {email}", foreground="green")
+        if len(token) >50:
+            token="Available"
+        else:
+            token="No Found Any Token!"						
+        token_status_label.config(text=f"Token: {token}", foreground="green")
+
+    except FileNotFoundError:
+        # Dosya bulunamadıysa, tüm alanlar boş olacak
+        username_status_label.config(text="Kullanıcı Adı:", foreground="red")
+        email_status_label.config(text="E-Posta:", foreground="red")
+        token_status_label.config(text="Token:", foreground="red")
+    except Exception as e:
+        messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+        
         
 calisma_dizini = os.path.join(os.path.expanduser("~"), "github")        
 os.chdir(calisma_dizini)
@@ -239,37 +258,93 @@ token_entry.grid(row=2, column=1, padx=5, pady=5)
 save_button = ttk.Button(window, text="Kaydet", command=get_user_info)
 save_button.grid(row=3, column=0, columnspan=2, padx=5, pady=10)
 
+# Kontrol Durumunu Gösteren Label'lar
+username_status_label = ttk.Label(window, text="", foreground="black")
+username_status_label.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
+
+email_status_label = ttk.Label(window, text="", foreground="black")
+email_status_label.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
+
+token_status_label = ttk.Label(window, text="", foreground="black")
+token_status_label.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
+
 # Proje Oluşturma
 repo_name_label = ttk.Label(window, text="Repo Adı:")
-repo_name_label.grid(row=4, column=0, padx=5, pady=5)
+repo_name_label.grid(row=7, column=0, padx=5, pady=5)
 repo_name_entry = ttk.Entry(window)
-repo_name_entry.grid(row=4, column=1, padx=5, pady=5)
+repo_name_entry.grid(row=7, column=1, padx=5, pady=5)
 
 create_button = ttk.Button(window, text="Proje Oluştur", command=create_project)
-create_button.grid(row=5, column=0, columnspan=2, padx=5, pady=10)
+create_button.grid(row=8, column=0, columnspan=2, padx=5, pady=10)
 
 # RSA Anahtarı Bölümü
 rsa_label = tk.Text(window, wrap=tk.WORD, height=3, width=50)  # tk.Text kullanarak oluştur
-rsa_label.grid(row=6, column=0, padx=5, pady=5, sticky="nsew")
+rsa_label.grid(row=9, column=0, padx=5, pady=5, sticky="nsew")
 
 # Scrollbar oluşturma
 scrollbar = tk.Scrollbar(window, command=rsa_label.yview)
-scrollbar.grid(row=6, column=1, sticky="ns")
+scrollbar.grid(row=9, column=1, sticky="ns")
 
 # Label'ın scrollbar'ı kullanmasını sağlama
 rsa_label.config(yscrollcommand=scrollbar.set)
 
 copy_button = ttk.Button(window, text="Kopyala", command=copy_rsa)
-copy_button.grid(row=7, column=0, padx=5, pady=5)
+copy_button.grid(row=10, column=0, padx=5, pady=5)
 
 generate_button = ttk.Button(window, text="Generate RSA", command=generate_rsa)
-generate_button.grid(row=7, column=1, padx=5, pady=5)
+generate_button.grid(row=10, column=1, padx=5, pady=5)
 
 # Başlangıçta RSA değerini güncelle
 update_rsa_text()
 
 # Download All Repos butonu
 download_button = ttk.Button(window, text="Download All Repos", command=download_repos)
-download_button.grid(row=8, column=0, columnspan=2, padx=5, pady=10)
+download_button.grid(row=11, column=0, columnspan=2, padx=5, pady=10)
+
+# Repo Listesi Bölümü
+repo_listbox = tk.Listbox(window, width=30, height=10)
+repo_listbox.grid(row=0, column=2, rowspan=10, padx=5, pady=5, sticky="nsew")
+
+# Scrollbar oluşturma
+repo_scrollbar = tk.Scrollbar(window, command=repo_listbox.yview)
+repo_scrollbar.grid(row=0, column=3, rowspan=10, sticky="ns")
+
+# Listbox'ın scrollbar'ı kullanmasını sağlama
+repo_listbox.config(yscrollcommand=repo_scrollbar.set)
+
+# Repo Listesini Güncelleme Fonksiyonu
+def update_repo_list():
+    """GitHub'dan repoları alır ve listbox'a ekler."""
+    try:
+        #get_user_info()
+        check_user_info()
+        update_rsa_text()
+		
+        # Ev dizini ile github klasörünü birleştirin
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
+        with open(bilgiler_dosyasi, "r") as f:
+            username, _, token = f.readline().strip().split(",")
+
+        gh = Github(token)
+        user = gh.get_user(username)
+
+        repo_listbox.delete(0, tk.END)  # Mevcut listeyi temizle
+        for repo in user.get_repos():
+            repo_listbox.insert(tk.END, repo.name)
+
+    except FileNotFoundError:
+        messagebox.showerror("Hata", "bilgiler.txt dosyası bulunamadı. Lütfen dosyayı kontrol edin.")
+    except Exception as e:
+        messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+
+# Güncelleme butonu
+update_button = ttk.Button(window, text="Güncelle", command=update_repo_list)
+update_button.grid(row=11, column=2, padx=5, pady=5)
+
+# Başlangıçta repo listesini güncelle
+update_repo_list()
+
+# Başlangıçta kontrol et
+check_user_info() 
 
 window.mainloop()
