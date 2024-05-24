@@ -1,6 +1,6 @@
 import subprocess
 import os
-
+#Çaşışıyor
 def generate_ssh_key(key_filename="id_rsa"):
   """SSH anahtar çiftini oluşturur ve kamu anahtarını bir dosyaya kaydeder.
   
@@ -8,7 +8,7 @@ def generate_ssh_key(key_filename="id_rsa"):
     key_filename: Özel anahtarın dosya adı. Kamu anahtarı otomatik olarak aynı isimle ".pub" uzantılı olarak oluşturulur.
   """
   try:
-    bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","Python_OTO_COMMIT", "bilgiler.txt")
+    bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github","MAIN", "bilgiler.txt")
     with open(bilgiler_dosyasi, "r") as f:
       username, email, tokenn = f.readline().strip().split(",")
       

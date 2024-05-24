@@ -26,7 +26,7 @@ def get_user_info():
         return
 
     # Ev dizini ile github klasörünü birleştirin
-    bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+    bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
 
     # Dosyayı oku ve önceki değerleri al
     try:
@@ -68,7 +68,7 @@ def create_project():
         # Kullanıcı bilgileri dosyasından oku
         try:
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
             with open(bilgiler_dosyasi, "r") as f:
                 username, email, token = f.readline().strip().split(",")
         except FileNotFoundError:
@@ -136,7 +136,7 @@ def generate_rsa():
     else:
         try:
             # Ev dizini ile github klasörünü birleştirin
-            keygen_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "keygen.py")
+            keygen_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "keygen.py")
             subprocess.run(["python", keygen_dosyasi])
             # RSA değerini güncellemek için update_rsa_text()'i çağırın
             update_rsa_text()
@@ -177,7 +177,7 @@ def download_repos():
     if statusRSA:
         try:
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
             with open(bilgiler_dosyasi, "r") as f:
                 username, _, token = f.readline().strip().split(",")
 
@@ -222,7 +222,7 @@ def check_user_info():
     """Kullanıcı bilgileri dosyasını kontrol eder ve sonuçları gösterir."""
     try:
         # Ev dizini ile github klasörünü birleştirin
-        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
         with open(bilgiler_dosyasi, "r") as f:
             username, email, token = f.readline().strip().split(",")
 
@@ -281,7 +281,7 @@ def sil_repo_arayuz():
 
             # Kullanıcı bilgileri dosyasından oku
             try:
-                bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+                bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
                 with open(bilgiler_dosyasi, "r") as f:
                     username, _, token = f.readline().strip().split(",")
 
@@ -340,7 +340,7 @@ def fork_project():
     if statusRSA:
         try:
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
             with open(bilgiler_dosyasi, "r") as f:
                 username, _, token = f.readline().strip().split(",")
 
@@ -369,7 +369,7 @@ def fork_repo_arayuz():
 
             # Kullanıcı bilgileri dosyasından oku
             try:
-                bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+                bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
                 with open(bilgiler_dosyasi, "r") as f:
                     username, _, token = f.readline().strip().split(",")
 
@@ -431,7 +431,7 @@ def update_repo_list(path=default,state=False):
                 rsaState()
             
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
             with open(bilgiler_dosyasi, "r") as f:
                 username, _, token = f.readline().strip().split(",")
 
@@ -461,7 +461,7 @@ def sil_secilen_repo(secilen_repo):
         if secilen_repo:
             # Kullanıcı bilgileri dosyasından oku
             try:
-                bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+                bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
                 with open(bilgiler_dosyasi, "r") as f:
                     username, _, token = f.readline().strip().split(",")
 
@@ -545,7 +545,7 @@ def show_repo_details():
                 return
 
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "Python_OTO_COMMIT", "bilgiler.txt")
+            
             with open(bilgiler_dosyasi, "r") as f:
                 username, _, token = f.readline().strip().split(",")
 

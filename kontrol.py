@@ -2,29 +2,57 @@ import os
 import time
 import subprocess
 from datetime import datetime
-#güncellendi
+
+# GitHub deponuzun kök dizinine giden yolu ayarlayın
+github_dizin = os.path.join(os.path.expanduser("~"), "github")
+
+
+# Zaman damgası dosyası yolu
+zaman_d = os.path.join(github_dizin, "MAIN", "zaman_damgasi.txt")
+kaydet=True
 def update(repo):
+    global kaydet
     """
     GitHub deponuzun kök dizinine geçerek commit ve push işlemleri yapar.
     """
-    # Mevcut dizini kaydet
-    original_directory = os.getcwd()
+    # Kilit dosyası kontrolü
+    os.chdir(repo)
+    if os.path.exists(".yukleniyor"):
+        print("Yuklenen Dosya :",os.getcwd())		
+        print("Yükleme işlemi devam ediyor, çıkılıyor...")
+        kaydet=False
+        return
 
     try:
-        # GitHub deponuzun kök dizinine geç
-        os.chdir(repo)  
+        # Kilit dosyası oluştur
         
-        # Git add, commit ve push işlemleri
-        subprocess.run(["git", "fetch", "origin"])  # En son değişiklikleri indir
-        subprocess.run(["git", "add", "."])
-        subprocess.run(["git", "commit", "-m", "python oto commit"])
-        result = subprocess.run(["git", "push", "-u", "origin", "main"])
-        if result.returncode != 0:
-            print("Git push işlemi başarısız oldu.")
+        with open(".yukleniyor", "w") as f:
+            pass
 
+        # Mevcut dizini kaydet
+        original_directory = os.getcwd()
+
+        try:
+            # GitHub deponuzun kök dizinine geç
+             
+            
+            # Git add, commit ve push işlemleri
+            subprocess.run(["git", "fetch", "origin"])  # En son değişiklikleri indir
+            subprocess.run(["git", "add", "."])
+            subprocess.run(["git", "commit", "-m", "python oto commit"])
+            result = subprocess.run(["git", "push", "-u", "origin", "main"])
+            kaydet=True
+            if result.returncode != 0:
+                print("Git push işlemi başarısız oldu.")
+                kaydet=False
+
+        finally:
+            # Başlangıç dizinine geri dön
+            os.chdir(original_directory)
     finally:
-        # Başlangıç dizinine geri dön
-        os.chdir(original_directory)
+        # Kilit dosyasını sil
+        os.remove(".yukleniyor")
+       
 
 def en_son_değişiklik_zamanı(dosya_yolu):
     """Dosyanın son değiştirilme, oluşturulma ve erişim zamanlarından en büyük olanını döndürür."""
@@ -44,15 +72,6 @@ def en_son_değişiklik_zamanı(dosya_yolu):
 # Bu script'in çalıştığı dizini al
 script_dizin = os.path.dirname(os.path.abspath(__file__))
 
-# Ev dizinini al
-ev_dizin = os.path.expanduser("~")
-
-# GitHub dizinini birleştir (evrensel)
-github_dizin = os.path.join(ev_dizin, "github")
-
-# Zaman damgası dosyasını birleştir (evrensel)
-zaman_d = os.path.join(github_dizin, "Python_OTO_COMMIT", "zaman_damgasi.txt")
-
 # Zaman damgası dosyasını oku
 try:
     with open(zaman_d, "r") as f:
@@ -71,10 +90,10 @@ max_zaman = zaman_damgasi
 for root, dirs, files in os.walk(github_dizin):
     dirs[:] = [d for d in dirs if d != ".git"]  # .git dizinini filtrele
     dirs[:] = [d for d in dirs if d != ".gitingore"]
-    dirs[:] = [d for d in dirs if d != "Python_OTO_COMMIT"]
+    dirs[:] = [d for d in dirs if d != "MAIN"]
     for dosya in files:
         # Gizli dosyaları ve belirli dosyaları atla
-        if  dosya=="zaman_damgasi.txt" or dosya=="bilgiler.txt" or dosya=="output.log":
+        if  dosya=="zaman_damgasi.txt" or dosya=="bilgiler.txt" or dosya=="output.log" or dosya==".yukleniyor":
             continue
         
         dosya_yolu = os.path.join(root, dosya)
@@ -82,7 +101,10 @@ for root, dirs, files in os.walk(github_dizin):
 
         # Dosyanın en son değişiklik zamanını al
         z = en_son_değişiklik_zamanı(dosya_yolu)
-        saniye = int(z.second)
+        try:
+            saniye = int(z.second)
+        except:
+            saniye=0			
         z = datetime(z.year, z.month, z.day, z.hour, z.minute, saniye)
 
         if z is not None:
@@ -97,6 +119,6 @@ for root, dirs, files in os.walk(github_dizin):
                     print(f"Hata: {dosya_yolu} için geçersiz zaman damgası.")
 
 # Zaman damgası dosyasını güncelle
-if max_zaman is not None:
+if max_zaman is not None and kaydet:
     with open(zaman_d, "w") as f:
         f.write(max_zaman.strftime("%a %b %d %H:%M:%S %Y"))  # Zaman damgasını dosyaya kaydet
