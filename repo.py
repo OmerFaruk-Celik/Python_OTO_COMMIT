@@ -545,6 +545,7 @@ def show_repo_details():
                 return
 
             # Ev dizini ile github klasörünü birleştirin
+            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
             
             with open(bilgiler_dosyasi, "r") as f:
                 username, _, token = f.readline().strip().split(",")
