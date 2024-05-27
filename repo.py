@@ -284,7 +284,7 @@ def sil_repo_arayuz():
                 return
 
             # Kullanıcı bilgileri dosyasından oku
-            try
+            try:
   
                 with open(bilgiler_dosyasi, "r") as f:
                     username, _, token = f.readline().strip().split(",")
