@@ -37,9 +37,12 @@ def update(repo):
              
             
             # Git add, commit ve push işlemleri
-            subprocess.run(["git", "fetch", "origin"])  # En son değişiklikleri indir
+            #subprocess.run(["git", "fetch", "origin"])  # En son değişiklikleri indir
+            
             subprocess.run(["git", "add", "."])
             subprocess.run(["git", "commit", "-m", "python oto commit"])
+            subprocess.run(["git", "pull", "--rebase"]) 
+            
             result = subprocess.run(["git", "push", "-u", "origin", "main"])
             kaydet=True
             if result.returncode != 0:
