@@ -8,7 +8,7 @@ github_dizin = os.path.join(os.path.expanduser("~"), "github")
 
 
 # Zaman damgası dosyası yolu
-zaman_d = os.path.join(github_dizin, "MAIN", "zaman_damgasi.txt")
+zaman_d = os.path.join(github_dizin, "MAIN","Python_OTO_COMMIT", "zaman_damgasi.txt")
 kaydet=True
 def update(repo):
     global kaydet
@@ -91,11 +91,14 @@ for root, dirs, files in os.walk(github_dizin):
     dirs[:] = [d for d in dirs if d != ".git"]  # .git dizinini filtrele
     dirs[:] = [d for d in dirs if d != ".gitingore"]
     dirs[:] = [d for d in dirs if d != "MAIN"]
-    for dosya in files:
+    dirs[:] = [d for d in dirs if ".git" not in d] 
+    for dosya in files:	
         # Gizli dosyaları ve belirli dosyaları atla
         if  dosya=="zaman_damgasi.txt" or dosya=="bilgiler.txt" or dosya=="output.log" or dosya==".yukleniyor":
+		
             continue
-        
+            
+
         dosya_yolu = os.path.join(root, dosya)
         
 

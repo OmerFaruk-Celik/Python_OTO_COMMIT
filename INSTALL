@@ -7,21 +7,41 @@ chmod +x "$0"
 echo "Gerekli Python paketlerini indiriyorum..."
 pip install github3.py pyperclip tk
 
-# 2. ~/github dizinini oluşturma
-echo "~/github dizinini oluşturuyorum..."
-mkdir -p ~/github
+# 2. ~/github/MAIN dizinini oluşturma
+echo "~/github/MAIN dizinini oluşturuyorum..."
+mkdir -p ~/github/MAIN
 
 # 3. Repo'yu indirme
 echo "Repo'yu indiriyorum..."
-git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git ~/github/MAIN
+git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git ~/github/MAIN/
 
 # 4. repo.py dosyasını /usr/bin/repo'ya kopyalama
 echo "repo.py dosyasını kopyalıyorum..."
+sudo rm -rf /usr/bin/repo
 sudo cp ~/github/MAIN/repo.py /usr/bin/repo
 
 # 5. Crontab'a komut ekleme
+
+echo "Eski Crontab içeriklerini siliyorum."
+crontab -l > crontab.txt
+sed '/^\* \* \* \* \* \/usr\/bin\/python3 ~\/github\/MAIN\/Python_OTO_COMMIT\/kontrol.py > ~.*$/d' crontab.txt > new_crontab.txt
+cat new_crontab.txt > crontab.txt
+
+sed '/^\* \* \* \* \* \/usr\/bin\/python3 ~\/github\/Python_OTO_COMMIT\/kontrol.py > ~.*$/d' crontab.txt > new_crontab.txt
+cat new_crontab.txt > crontab.txt
+
+sed '/^\* \* \* \* \* \/usr\/bin\/python3 ~\/github\/Python_OTO_COMMIT\/kontrol.py > ~.*$/d' crontab.txt > new_crontab.txt
+cat new_crontab.txt > crontab.txt
+
+sed '/^\* \* \* \* \* \/usr\/bin\/python3.*$/d' crontab.txt > new_crontab.txt
+cat new_crontab.txt > crontab.txt
+ 
+crontab crontab.txt
+
+
+
 echo "Crontab'a komut ekliyorum..."
-(crontab -l 2>/dev/null; echo "* * * * * /usr/bin/python3 ~/github/MAIN/kontrol.py > ~/github/MAIN/output.log 2>&1") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * /usr/bin/python3 ~/github/MAIN/Python_OTO_COMMIT/kontrol.py > ~/github/MAIN/Python_OTO_COMMIT/output.log 2>&1") | crontab -
 
 # 6. Bilgiler.txt dosyasını düzenleme
 echo "bilgiler.txt dosyasını düzenleyin..."

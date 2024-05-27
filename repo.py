@@ -14,6 +14,7 @@ from github3 import GitHub
 statusRSA=False
 def get_user_info():
     """Kullanıcı adını, e-postasını ve token'ı alır."""
+    global bilgiler_dosyasi 
     global username, email, token
 
     username = username_entry.get()
@@ -26,7 +27,7 @@ def get_user_info():
         return
 
     # Ev dizini ile github klasörünü birleştirin
-    bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
+
 
     # Dosyayı oku ve önceki değerleri al
     try:
@@ -68,7 +69,7 @@ def create_project():
         # Kullanıcı bilgileri dosyasından oku
         try:
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
+            
             with open(bilgiler_dosyasi, "r") as f:
                 username, email, token = f.readline().strip().split(",")
         except FileNotFoundError:
@@ -174,10 +175,11 @@ def copy_rsa():
 
 def download_repos():
     """Tüm repoları indirir."""
+    global bilgiler_dosyasi 
     if statusRSA:
         try:
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
+
             with open(bilgiler_dosyasi, "r") as f:
                 username, _, token = f.readline().strip().split(",")
 
@@ -220,9 +222,10 @@ def download_repos_from_github(token, username):
 
 def check_user_info():
     """Kullanıcı bilgileri dosyasını kontrol eder ve sonuçları gösterir."""
+    global bilgiler_dosyasi 
     try:
         # Ev dizini ile github klasörünü birleştirin
-        bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
+
         with open(bilgiler_dosyasi, "r") as f:
             username, email, token = f.readline().strip().split(",")
 
@@ -270,6 +273,7 @@ def sil_repo(token, username, repo_name):
         messagebox.showerror("Hata", "Lütfen önce RSA anahtarınızı oluşturun ve aktif hale getirin.")
 
 def sil_repo_arayuz():
+	global bilgiler_dosyasi 
     """Repo silme arayüzünü oluşturur."""
     def sil():
         """Repo silme işlemini başlatır."""
@@ -280,8 +284,7 @@ def sil_repo_arayuz():
                 return
 
             # Kullanıcı bilgileri dosyasından oku
-            try:
-                bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
+  
                 with open(bilgiler_dosyasi, "r") as f:
                     username, _, token = f.readline().strip().split(",")
 
@@ -359,6 +362,7 @@ def fork_project():
 
 def fork_repo_arayuz():
     """Repo forklama arayüzünü oluşturur."""
+    global bilgiler_dosyasi 
     def fork():
         """Repo forklama işlemini başlatır."""
         if statusRSA:
@@ -369,7 +373,7 @@ def fork_repo_arayuz():
 
             # Kullanıcı bilgileri dosyasından oku
             try:
-                bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
+
                 with open(bilgiler_dosyasi, "r") as f:
                     username, _, token = f.readline().strip().split(",")
 
@@ -422,6 +426,7 @@ def rsaState():
 default = os.path.join(os.path.expanduser("~"), "github")
 def update_repo_list(path=default,state=False):
     """GitHub'dan repoları alır ve listbox'a ekler."""
+    global bilgiler_dosyasi 
     if True:
         try:
             #get_user_info()
@@ -431,7 +436,7 @@ def update_repo_list(path=default,state=False):
                 rsaState()
             
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
+
             with open(bilgiler_dosyasi, "r") as f:
                 username, _, token = f.readline().strip().split(",")
 
@@ -457,11 +462,11 @@ def update_repo_list(path=default,state=False):
 # Sağ Tık Menüsü Fonksiyonları
 def sil_secilen_repo(secilen_repo):
     """Seçilen repoyu silmek için kullanılır."""
+    global bilgiler_dosyasi 
     if statusRSA:
         if secilen_repo:
             # Kullanıcı bilgileri dosyasından oku
             try:
-                bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
                 with open(bilgiler_dosyasi, "r") as f:
                     username, _, token = f.readline().strip().split(",")
 
@@ -537,6 +542,7 @@ def geri_al():
 
 def show_repo_details():
     """Seçili repo'nun detaylarını gösterir."""
+    global bilgiler_dosyasi 
     if statusRSA:
         try:
             selected_repo = repo_listbox.get(tk.ANCHOR)
@@ -545,7 +551,7 @@ def show_repo_details():
                 return
 
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
+            
             
             with open(bilgiler_dosyasi, "r") as f:
                 username, _, token = f.readline().strip().split(",")
@@ -592,6 +598,7 @@ def show_repo_details():
         
 
 calisma_dizini = os.path.join(os.path.expanduser("~"), "github")
+bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN","Python_OTO_COMMIT", "bilgiler.txt")
 os.chdir(calisma_dizini)
 # Tkinter Penceresi Oluştur
 window = tk.Tk()
