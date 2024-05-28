@@ -323,7 +323,8 @@ def fork_repo(token, username, repo_path):
         gh = GitHub(token=token)
 
         # Repo yolundan owner ve repo adını ayırma
-        repo_path = repo_path.rstrip(".git")  # .git uzantısını kaldır
+        repo_path = repo_path.replace(".git", "")# .git uzantısını kaldır
+        print(repo_path)
         match = re.search(r'github.com/([^/]+)/([^/]+)', repo_path)
         if match:
             owner = match.group(1)
@@ -341,10 +342,11 @@ def fork_repo(token, username, repo_path):
 
 def fork_project():
     """Forklama işlemini başlatır."""
+    global bilgiler_dosyasi
     if statusRSA:
         try:
             # Ev dizini ile github klasörünü birleştirin
-            bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN", "bilgiler.txt")
+            
             with open(bilgiler_dosyasi, "r") as f:
                 username, _, token = f.readline().strip().split(",")
 
@@ -368,6 +370,7 @@ def fork_repo_arayuz():
         """Repo forklama işlemini başlatır."""
         if statusRSA:
             repo_path = fork_repo_entry.get()
+            print(repo_path)
             if not repo_path:
                 messagebox.showerror("Hata", "Lütfen forklanacak repo'nun URL'sini veya yolunu girin.")
                 return
@@ -390,7 +393,7 @@ def fork_repo_arayuz():
             except FileNotFoundError:
                 messagebox.showerror("Hata", "Kullanıcı bilgileri dosyası bulunamadı.")
             except Exception as e:
-                messagebox.showerror("Hata", f"Bir hata oluştu: {e}")
+                messagebox.showerror("Hata", f"fork_repo_arayuz() Bir hata oluştu: {e}")
         else:
             messagebox.showerror("Hata", "Lütfen önce RSA anahtarınızı oluşturun ve aktif hale getirin.")
 
