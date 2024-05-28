@@ -8,7 +8,8 @@ Geliştirme sürecinizde, dosyalarınızı düzenli bir şekilde Git'e ekleme, c
 
 ## 🚀  Python_OTO_COMMIT'in Özellikleri:
 
-* **Otomatik Commit ve Push:**  Bir düğmeye basarak, tüm dosyalarınızı Git'e ekler,  bir commit oluşturur ve GitHub'a gönderir.
+* **Otomatik Commit ve Push:**  Masaüstündeki reponuza yaptığınız en ufak bir değişiklik ile bir dakika içinde tüm dosyalarınızı Git'e ekler,  bir commit oluşturur ve GitHub'a gönderir.
+
 * **Kullanıcı Dostu Arayüz:**  Kullanıcı dostu bir arayüz sayesinde,  komut satırı kullanma konusunda deneyiminiz olmasa bile kolayca kullanabilirsiniz.
 * **Zaman Tasarrufu:**  Tekrarlayan Git işlemlerini otomatikleştirerek,  vaktinizi daha önemli görevlere ayırmanıza olanak tanır.
 * **Daha İyi Sürüm Yönetimi:**  Düzenli commit ve push işlemleri, projenizin sürüm yönetimini kolaylaştırır ve daha iyi bir kod geçmişi oluşturmanıza yardımcı olur.
