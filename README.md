@@ -42,5 +42,6 @@ Buradan github bilgilerini girdikten sonra github sayfanızdan token alıp Token
 
 #Test Ve Yükleme Videosu
 
+Python_OTO_COMMIT'in nasıl kullanılacağını görmek için aşağıdaki videoyu izleyebilirsiniz:
 
-![Python_OTO_COMMIT Demo](videos/demo.gif)
+[![Python_OTO_COMMIT Demo](https://youtu.be/iiizvrUCjfo)](https://youtu.be/iiizvrUCjfo)
