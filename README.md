@@ -22,10 +22,10 @@ Geliştirme sürecinizde, dosyalarınızı düzenli bir şekilde Git'e ekleme, c
 
 2. **Yukleme İşlemi:**
    ```bash
-	git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git
-	cd Python_OTO_COMMIT
-	chmod +x ./INSTALL
-	./INSTALL
+   git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git
+   cd Python_OTO_COMMIT
+   chmod +x ./INSTALL
+   ./INSTALL
 
 
 Bu işlem adımlarından sonra eğer repo başarıyla yüklenmişse repo arayüzü açılacaktır. Sonrasında terminale repo yazarak kullanıcı arayüzüne ulaşabilirsiniz.
