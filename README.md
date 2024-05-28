@@ -1,64 +1,24 @@
-# Python Projem
-#!/bin/bash
+# Python_OTO_COMMIT: Geliştirici Verimliliğini Artıran Otomatik Git İşlemleri Aracı
 
-# Script'in yürütülebilir olmasını sağla
+## ⏱️ Zamanınızı Geri Kazanmanız İçin
 
-chmod +x "$0"
+Geliştirme sürecinizde, dosyalarınızı düzenli bir şekilde Git'e ekleme, commit etme ve GitHub'a gönderme işlemleri zaman alıcı olabilir. Özellikle, yoğun ve hızlı bir çalışma temposunda bu işlemler, odaklanmanızı ve üretkenliğinizi etkileyebilir.
 
+**Python_OTO_COMMIT**, bu sıkıcı ve zaman alıcı görevleri otomatikleştirerek,  geliştirme sürecini hızlandırmanıza ve odaklanmanızı kodlamaya yönlendirmenize yardımcı olan bir araçtır.
 
-# 1. Gerekli Python paketlerini yükleme
+## 🚀  Python_OTO_COMMIT'in Özellikleri:
 
-echo "Gerekli Python paketlerini indiriyorum..."
+* **Otomatik Commit ve Push:**  Bir düğmeye basarak, tüm dosyalarınızı Git'e ekler,  bir commit oluşturur ve GitHub'a gönderir.
+* **Kullanıcı Dostu Arayüz:**  Kullanıcı dostu bir arayüz sayesinde,  komut satırı kullanma konusunda deneyiminiz olmasa bile kolayca kullanabilirsiniz.
+* **Zaman Tasarrufu:**  Tekrarlayan Git işlemlerini otomatikleştirerek,  vaktinizi daha önemli görevlere ayırmanıza olanak tanır.
+* **Daha İyi Sürüm Yönetimi:**  Düzenli commit ve push işlemleri, projenizin sürüm yönetimini kolaylaştırır ve daha iyi bir kod geçmişi oluşturmanıza yardımcı olur.
+* **Esneklik:**  Ayarlanabilir seçeneklerle, commit mesajlarını, GitHub deponuzun adını ve diğer parametreleri kişiselleştirebilirsiniz.
 
-pip install github3 pyperclip tkinter ttk
+## 💻 Kurulum
 
-
-# 2. ~/github dizinini oluşturma
-
-echo "~/github dizinini oluşturuyorum..."
-
-mkdir -p ~/github
-
-
-# 3. Repo'yu indirme
-
-echo "Repo'yu indiriyorum..."
-
-git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git ~/github/Python_OTO_COMMIT
-
-
-# 4. repo.py dosyasını /usr/bin/repo'ya kopyalama
-
-echo "repo.py dosyasını kopyalıyorum..."
-
-sudo cp ~/github/Python_OTO_COMMIT/repo.py /usr/bin/repo
-
-
-# 5. Crontab'a komut ekleme
-
-echo "Crontab'a komut ekliyorum..."
-
-echo "* * * * * /usr/bin/python3 ~/github/Python_OTO_COMMIT/kontrol.py > ~/github/Python_OTO_COMMIT/output.log 2>&1" | sudo tee -a /etc/crontab
-
-
-# 6. Bilgiler.txt dosyasını düzenleme
-
-echo "bilgiler.txt dosyasını düzenleyin..."
-
-echo "Kullanıcı Adı,E-Posta,GITHUB_TOKEN" > ~/github/Python_OTO_COMMIT/bilgiler.txt
-
-echo "Lütfen bilgiler.txt dosyasını düzenleyin ve bilgilerinizi ekleyin."
-
-echo "Token'ı GitHub'dan oluşturun."
-
-echo "Daha sonra script'i çalıştırın."
-
-echo "INSTALL işlemi tamamlandı!"
-
-
-
-
-
+1. **Gerekli Paketleri Yükleme:**
+   ```bash
+   pip install -r requirements.txt
 
 git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git
 
@@ -67,3 +27,8 @@ cd Python_OTO_COMMIT
 chmod +x ./INSTALL
 ./INSTALL
 
+
+Bu işlem adımlarından sonra eğer repo başarıyla yüklenmişse repo arayüzü açılacaktır. Sonrasında terminale repo yazarak kullanıcı arayüzüne ulaşabilirsiniz.
+
+#Repo Arayüzü
+![Algoritma Akış Diyagramı 1](images/repo.png)
