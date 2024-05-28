@@ -508,13 +508,17 @@ def duzenle_secilen_repo(secilen_repo):
 
 
 
+
 def sag_tik_goster(event):
     """Sağ tıklama üzerine menüyü gösterir."""
     try:
         repo_listbox.selection_set(repo_listbox.nearest(event.y))  # En yakın öğeyi seç
     except tk.TclError:
-        pass  # Eğer tıklama listbox'ın dışındaysa hata yakala
+       window.after(1000, sag_tik_menu.unpost)#pass  # Eğer tıklama listbox'ın dışındaysa hata yakala
     sag_tik_menu.post(event.x_root, event.y_root)
+
+    # 5 saniye sonra menüyü gizle
+    window.after(3000, sag_tik_menu.unpost)
 
 
 def gir_repo(event):
@@ -604,6 +608,10 @@ def show_repo_details():
 calisma_dizini = os.path.join(os.path.expanduser("~"), "github")
 bilgiler_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN","Python_OTO_COMMIT", "bilgiler.txt")
 os.chdir(calisma_dizini)
+
+# Başlangıçta menü kapalı olsun
+menu_acik = False
+fare_ustunde = False  # Fare menünün üstünde olmadığını işaretle
 # Tkinter Penceresi Oluştur
 window = tk.Tk()
 window.title("GitHub Proje Oluşturucu")
