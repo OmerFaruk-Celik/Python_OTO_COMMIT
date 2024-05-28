@@ -32,3 +32,8 @@ Bu işlem adımlarından sonra eğer repo başarıyla yüklenmişse repo arayüz
 
 #Repo Arayüzü
 ![Repo](images/repo.png)
+
+Buradan github bilgilerini girdikten sonra github sayfanızdan token alıp Token kısmına yapıştırıyorsunuz. Sonrasından oluşturduğunu rsa_id'nizi yine github sayfanızda yeni ssh oluştur kısmına yapıştırdıktan sonra kayıt işlemi bitiyor. Bundan sonra Python_OTO_Commit masaüstüne indirdiğiniz repolarınızda yaptığınız değişiklikleri her dakika başı kontrol edip github hesabına yansıtıyor.
+
+#Masaüstü Kullanımı
+![Repo](images/masaustu.png)
