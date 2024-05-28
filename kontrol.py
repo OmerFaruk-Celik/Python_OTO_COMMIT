@@ -38,16 +38,27 @@ def update(repo):
             
             # Git add, commit ve push işlemleri
             #subprocess.run(["git", "fetch", "origin"])  # En son değişiklikleri indir
-            
+            commit=str(datetime.now())
+            commit="oto commit "+commit
             subprocess.run(["git", "add", "."])
-            subprocess.run(["git", "commit", "-m", "python oto commit"])
-            subprocess.run(["git", "pull", "--rebase"]) 
-            
+            subprocess.run(["git", "commit", "-m", commit])
             result = subprocess.run(["git", "push", "-u", "origin", "main"])
             kaydet=True
             if result.returncode != 0:
                 print("Git push işlemi başarısız oldu.")
+                
+        except:
+            try:
+                commit=str(datetime.now())
+                commit="oto commit --rebase "+commit
+                subprocess.run(["git", "add", "."])
+                subprocess.run(["git", "commit", "-m", commit])
+                subprocess.run(["git", "pull", "--rebase"]) 			
+                result = subprocess.run(["git", "push", "-u", "origin", "main"])
+            except:
                 kaydet=False
+                print("kaydetme işlemi başarısız oldu")			
+			
 
         finally:
             # Başlangıç dizinine geri dön
@@ -128,3 +139,4 @@ for root, dirs, files in os.walk(github_dizin):
 if max_zaman is not None and kaydet:
     with open(zaman_d, "w") as f:
         f.write(max_zaman.strftime("%a %b %d %H:%M:%S %Y"))  # Zaman damgasını dosyaya kaydet
+
