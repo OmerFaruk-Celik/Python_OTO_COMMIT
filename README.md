@@ -31,4 +31,4 @@ chmod +x ./INSTALL
 Bu işlem adımlarından sonra eğer repo başarıyla yüklenmişse repo arayüzü açılacaktır. Sonrasında terminale repo yazarak kullanıcı arayüzüne ulaşabilirsiniz.
 
 #Repo Arayüzü
-![Algoritma Akış Diyagramı 1](images/repo.png)
+![Repo](images/repo.png)
