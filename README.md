@@ -20,7 +20,7 @@ Geliştirme sürecinizde, dosyalarınızı düzenli bir şekilde Git'e ekleme, c
    ```bash
    pip install -r requirements.txt
 
-    '''bash
+   ```bash
 	git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git
 	cd Python_OTO_COMMIT
 	chmod +x ./INSTALL
