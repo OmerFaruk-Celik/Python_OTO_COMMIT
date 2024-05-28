@@ -43,4 +43,4 @@ Buradan github bilgilerini girdikten sonra github sayfanızdan token alıp Token
 #Test Ve Yükleme Videosu
 
 
-![Python_OTO_COMMIT Demo](videos/demo.mp4)
+![Python_OTO_COMMIT Demo](videos/demo.gif)
