@@ -44,4 +44,4 @@ Buradan github bilgilerini girdikten sonra github sayfanızdan token alıp Token
 
 Python_OTO_COMMIT'in nasıl kullanılacağını görmek için aşağıdaki videoyu izleyebilirsiniz:
 
-[![Python_OTO_COMMIT Demo](https://youtu.be/iiizvrUCjfo)](https://youtu.be/iiizvrUCjfo)
+[![Python_OTO_COMMIT Demo](images/demo.webp)](https://youtu.be/iiizvrUCjfo)
