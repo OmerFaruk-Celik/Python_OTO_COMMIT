@@ -38,3 +38,9 @@ Buradan github bilgilerini girdikten sonra github sayfanızdan token alıp Token
 
 #Masaüstü Kullanımı
 ![Repo](images/masaustu.png)
+
+
+#Test Ve Yükleme Videosu
+
+
+![Python_OTO_COMMIT Demo](videos/demo.mp4)
