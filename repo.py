@@ -657,7 +657,7 @@ repo_name_label.grid(row=0, column=0, padx=5, pady=5)
 repo_name_entry = ttk.Entry(project_frame)
 repo_name_entry.grid(row=0, column=1, padx=5, pady=5)
 
-create_button = ttk.Button(project_frame, text=" Proje Oluştur ", command=create_project)
+create_button = ttk.Button(project_frame, text="Proje Oluştur/İndir", command=create_project)
 create_button.grid(row=1, column=1,columnspan=1, padx=5, pady=10)
 
 # Repo Silme
