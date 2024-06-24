@@ -132,7 +132,7 @@ def create_project():
 
 def generate_rsa():
     """keygen.py dosyasını çalıştırır."""
-    if True:
+    if statusRSA:
         messagebox.showinfo("Bilgi", "RSA anahtarı zaten oluşturulmuş ve aktif.")
     else:
         try:
