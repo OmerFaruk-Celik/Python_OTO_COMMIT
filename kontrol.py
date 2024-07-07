@@ -97,6 +97,15 @@ def parcalara_ayir_ve_tasi(dosya_yolu):
     os.remove(dosya_yolu)
     return True
 
+def parcalari_push_etme(dosya_yolu, repo):
+    parcalar = sorted(os.listdir(TEMP_DIZIN))
+    for parca in parcalar:
+        parca_dosya_yolu = os.path.join(TEMP_DIZIN, parca)
+        hedef_dosya_yolu = os.path.join(os.path.dirname(dosya_yolu), parca)
+        os.rename(parca_dosya_yolu, hedef_dosya_yolu)
+        update(repo)
+        os.remove(hedef_dosya_yolu)
+
 script_dizin = os.path.dirname(os.path.abspath(__file__))
 
 try:
@@ -131,14 +140,9 @@ for root, dirs, files in os.walk(github_dizin):
             if max_zaman is not None:
                 try:
                     if z > max_zaman:
-                        if os.path.getsize(dosya_yolu) > 400 * 1024 * 1024:  # 500 MB
+                        if os.path.getsize(dosya_yolu) > 500 * 1024 * 1024:  # 500 MB
                             if parcalara_ayir_ve_tasi(dosya_yolu):
-                                for parca_dosya in os.listdir(TEMP_DIZIN):
-                                    parca_dosya_yolu = os.path.join(TEMP_DIZIN, parca_dosya)
-                                    hedef_dosya_yolu = os.path.join(root, parca_dosya)
-                                    os.rename(parca_dosya_yolu, hedef_dosya_yolu)
-                                    update(root)
-                                    os.remove(hedef_dosya_yolu)
+                                parcalari_push_etme(dosya_yolu, root)
                         else:
                             print(f"{dosya_yolu}: True, {z}")
                             max_zaman = z
