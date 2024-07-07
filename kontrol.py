@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 from datetime import datetime
 
@@ -76,35 +77,52 @@ def en_son_değişiklik_zamanı(dosya_yolu):
         print(f"Hata: {dosya_yolu} dosyası bulunamadı.")
         return None
 
-def parcalara_ayir_ve_tasi(dosya_yolu):
-    dosya_boyutu = os.path.getsize(dosya_yolu)
-    if dosya_boyutu > 1 * 1024 * 1024 * 1024:  # 1 GB
-        print(f"{dosya_yolu} dosyası 1 GB'tan büyük ve parçalanamıyor.")
-        return False
+def klasor_boyutunu_hesapla(klasor):
+    toplam_boyut = 0
+    for root, dirs, files in os.walk(klasor):
+        for dosya in files:
+            dosya_yolu = os.path.join(root, dosya)
+            toplam_boyut += os.path.getsize(dosya_yolu)
+    return toplam_boyut
+
+def klasoru_tasi_ve_parcala(klasor_yolu):
+    ana_klasor_adi = os.path.basename(klasor_yolu)
+    hedef_klasor_yolu = os.path.join(TEMP_DIZIN, ana_klasor_adi)
+    shutil.move(klasor_yolu, hedef_klasor_yolu)
 
     parca_boyutu = 100 * 1024 * 1024  # 100 MB
-    with open(dosya_yolu, 'rb') as f:
-        parca_numarasi = 0
-        while True:
-            parca = f.read(parca_boyutu)
-            if not parca:
-                break
-            parca_dosya_adi = f"{os.path.basename(dosya_yolu)}.parca{parca_numarasi}"
-            parca_dosya_yolu = os.path.join(TEMP_DIZIN, parca_dosya_adi)
-            with open(parca_dosya_yolu, 'wb') as pf:
-                pf.write(parca)
-            parca_numarasi += 1
-    os.remove(dosya_yolu)
-    return True
+    parca_numarasi = 0
+    parcalar = []
+    for root, dirs, files in os.walk(hedef_klasor_yolu):
+        for dosya in files:
+            dosya_yolu = os.path.join(root, dosya)
+            with open(dosya_yolu, 'rb') as f:
+                while True:
+                    parca = f.read(parca_boyutu)
+                    if not parca:
+                        break
+                    parca_dosya_adi = f"{ana_klasor_adi}.parca{parca_numarasi}"
+                    parca_dosya_yolu = os.path.join(TEMP_DIZIN, parca_dosya_adi)
+                    with open(parca_dosya_yolu, 'wb') as pf:
+                        pf.write(parca)
+                    parcalar.append(parca_dosya_yolu)
+                    parca_numarasi += 1
+            os.remove(dosya_yolu)
+    shutil.rmtree(hedef_klasor_yolu)
+    return parcalar
 
-def parcalari_push_etme(dosya_yolu, repo):
-    parcalar = sorted(os.listdir(TEMP_DIZIN))
-    for parca in parcalar:
-        parca_dosya_yolu = os.path.join(TEMP_DIZIN, parca)
-        hedef_dosya_yolu = os.path.join(os.path.dirname(dosya_yolu), parca)
-        os.rename(parca_dosya_yolu, hedef_dosya_yolu)
+def parcalari_push_etme(parcalar, repo, klasor_yolu):
+    ana_klasor_adi = os.path.basename(klasor_yolu)
+    yeni_klasor_yolu = os.path.join(os.path.dirname(klasor_yolu), ana_klasor_adi)
+    os.makedirs(yeni_klasor_yolu, exist_ok=True)
+
+    for parca_dosya_yolu in parcalar:
+        parca_dosya_adi = os.path.basename(parca_dosya_yolu)
+        hedef_dosya_yolu = os.path.join(yeni_klasor_yolu, parca_dosya_adi)
+        shutil.move(parca_dosya_yolu, hedef_dosya_yolu)
         update(repo)
         os.remove(hedef_dosya_yolu)
+    shutil.rmtree(yeni_klasor_yolu)
 
 script_dizin = os.path.dirname(os.path.abspath(__file__))
 
@@ -121,7 +139,15 @@ except ValueError:
 max_zaman = zaman_damgasi 
 
 for root, dirs, files in os.walk(github_dizin):
-    dirs[:] = [d for d in dirs if d != ".git" and d != ".gitingore" and d != "MAIN" and ".git" not in d]
+    if root == github_dizin:
+        for dir_name in dirs:
+            klasor_yolu = os.path.join(root, dir_name)
+            klasor_boyutu = klasor_boyutunu_hesapla(klasor_yolu)
+            if klasor_boyutu > 500 * 1024 * 1024:  # 500 MB
+                parcalar = klasoru_tasi_ve_parcala(klasor_yolu)
+                parcalari_push_etme(parcalar, root, klasor_yolu)
+                continue
+
     for dosya in files:
         if dosya in ["zaman_damgasi.txt", "bilgiler.txt", "output.log", ".yukleniyor"]:
             continue
@@ -140,13 +166,9 @@ for root, dirs, files in os.walk(github_dizin):
             if max_zaman is not None:
                 try:
                     if z > max_zaman:
-                        if os.path.getsize(dosya_yolu) > 500 * 1024 * 1024:  # 500 MB
-                            if parcalara_ayir_ve_tasi(dosya_yolu):
-                                parcalari_push_etme(dosya_yolu, root)
-                        else:
-                            print(f"{dosya_yolu}: True, {z}")
-                            max_zaman = z
-                            update(root)
+                        print(f"{dosya_yolu}: True, {z}")
+                        max_zaman = z
+                        update(root)
                 except ValueError:
                     print(f"Hata: {dosya_yolu} için geçersiz zaman damgası.")
 
