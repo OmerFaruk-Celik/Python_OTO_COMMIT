@@ -131,7 +131,7 @@ for root, dirs, files in os.walk(github_dizin):
             if max_zaman is not None:
                 try:
                     if z > max_zaman:
-                        if os.path.getsize(dosya_yolu) > 500 * 1024 * 1024:  # 500 MB
+                        if os.path.getsize(dosya_yolu) > 400 * 1024 * 1024:  # 500 MB
                             if parcalara_ayir_ve_tasi(dosya_yolu):
                                 for parca_dosya in os.listdir(TEMP_DIZIN):
                                     parca_dosya_yolu = os.path.join(TEMP_DIZIN, parca_dosya)
