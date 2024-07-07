@@ -1,8 +1,6 @@
 import os
-import time
 import subprocess
 from datetime import datetime
-from tkinter import messagebox
 
 # GitHub deponuzun kök dizinine giden yolu ayarlayın
 github_dizin = os.path.join(os.path.expanduser("~"), "github")
@@ -43,21 +41,23 @@ def update(repo):
             if not branch:
                 branch = "main"
 
+            # Git push işlemi
             result = git_command(["git", "push", "-u", "origin", branch], repo)
-            kaydet = True
             if not result:
                 print("Git push işlemi başarısız oldu.")
-                
-        except:
+
+            kaydet = True
+        except Exception as e:
+            print(f"Git işlemi sırasında hata: {e}")
             try:
                 commit_message = "oto commit --rebase " + str(datetime.now())
                 git_command(["git", "add", "."], repo)
                 git_command(["git", "commit", "-m", commit_message], repo)
                 git_command(["git", "pull", "--rebase"], repo) 
                 result = git_command(["git", "push", "-u", "origin", branch], repo)
-            except:
+            except Exception as e:
                 kaydet = False
-                print("Kaydetme işlemi başarısız oldu.")
+                print(f"Git rebase işlemi sırasında hata: {e}")
                 
         finally:
             os.chdir(original_directory)
@@ -79,7 +79,7 @@ def en_son_değişiklik_zamanı(dosya_yolu):
 def parcalara_ayir_ve_tasi(dosya_yolu):
     dosya_boyutu = os.path.getsize(dosya_yolu)
     if dosya_boyutu > 1 * 1024 * 1024 * 1024:  # 1 GB
-        messagebox.showwarning("Büyük Dosya", f"{dosya_yolu} dosyası 1 GB'tan büyük ve parçalanamıyor.")
+        print(f"{dosya_yolu} dosyası 1 GB'tan büyük ve parçalanamıyor.")
         return False
 
     parca_boyutu = 100 * 1024 * 1024  # 100 MB
