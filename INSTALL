@@ -6,6 +6,7 @@ sudo apt-get install python3-tk
 # 1. Gerekli Python paketlerini yükleme
 echo "Gerekli Python paketlerini indiriyorum..."
 pip install github3.py pyperclip tk
+pip3 install PyGithub
 
 # 2. ~/github/MAIN dizinini oluşturma
 echo "~/github/MAIN dizinini oluşturuyorum..."
