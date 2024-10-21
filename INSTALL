@@ -12,17 +12,19 @@ pip3 install PyGithub
 echo "~/github/MAIN dizinini oluşturuyorum..."
 mkdir -p ~/github/MAIN
 
+echo "repo.py dosyasını /usr/bin/repo dizininden siliyorum"
+sudo rm -rf /usr/bin/repo
+
+echo "Python_OTO_COMMIT dosyasını ~/github/MAIN/Python_OTO_COMMIT/ dizininden siliyorum"
+sudo rm -rf ~/github/MAIN/Python_OTO_COMMIT/
+
+
 # 3. Repo'yu indirme
 echo "Repo'yu indiriyorum..."
 git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git ~/github/MAIN/Python_OTO_COMMIT
 
 # 4. repo.py dosyasını /usr/bin/repo'ya kopyalama
 
-echo "repo.py dosyasını /usr/bin/repo dizininden siliyorum"
-sudo rm -rf /usr/bin/repo
-
-echo "Python_OTO_COMMIT dosyasını ~/github/MAIN/Python_OTO_COMMIT/ dizininden siliyorum"
-sudo rm -rf ~/github/MAIN/Python_OTO_COMMIT/
 
 echo "repo.py dosyasını kopyalıyorum..."
 sudo cp ~/github/MAIN/Python_OTO_COMMIT/repo.py /usr/bin/repo
