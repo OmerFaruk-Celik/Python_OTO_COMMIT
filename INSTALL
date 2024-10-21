@@ -18,6 +18,7 @@ mkdir -p ~/github/MAIN
 
 echo "repo.py dosyasını /usr/bin/repo dizininden siliyorum"
 sudo rm -rf /usr/bin/repo
+sudo rm -rf /usr/bin/grepo
 
 echo "Python_OTO_COMMIT dosyasını ~/github/MAIN/Python_OTO_COMMIT/ dizininden siliyorum"
 sudo rm -rf ~/github/MAIN/Python_OTO_COMMIT/
@@ -31,7 +32,7 @@ git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git ~/github/MAIN
 
 
 echo "repo.py dosyasını kopyalıyorum..."
-sudo cp ~/github/MAIN/Python_OTO_COMMIT/repo.py /usr/bin/repo
+sudo cp ~/github/MAIN/Python_OTO_COMMIT/repo.py /usr/bin/grepo
 
 # 5. Crontab'a komut ekleme
 
