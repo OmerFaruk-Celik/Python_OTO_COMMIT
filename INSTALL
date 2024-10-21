@@ -57,5 +57,7 @@ echo "Lütfen bilgiler.txt dosyasını düzenleyin ve bilgilerinizi ekleyin."
 echo "Token'ı GitHub'dan oluşturun."
 echo "Daha sonra script'i çalıştırın."
 
+cd ..
+rm -rf ./Python_OTO_COMMIT
 echo "INSTALL işlemi tamamlandı! terminale repo yazarak kullanıcı arayüzüne ulaşabilirsiniz."
 repo
