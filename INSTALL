@@ -16,7 +16,7 @@ echo "repo.py dosyasını /usr/bin/repo dizininden siliyorum"
 sudo rm -rf /usr/bin/repo
 
 echo "Python_OTO_COMMIT dosyasını ~/github/MAIN/Python_OTO_COMMIT/ dizininden siliyorum"
-sudo rm -rf ~/github/MAIN/Python_OTO_COMMIT
+sudo rm -rf ~/github/MAIN/Python_OTO_COMMIT/
 
 
 # 3. Repo'yu indirme
