@@ -2,6 +2,8 @@
 
 # Script'in yürütülebilir olmasını sağla
 chmod +x "$0"
+sudo git config --system core.longpaths true
+sudo git config --global core.protectNTFS false
 sudo apt-get install python3-tk
 # 1. Gerekli Python paketlerini yükleme
 echo "Gerekli Python paketlerini indiriyorum..."
@@ -21,7 +23,7 @@ sudo rm -rf ~/github/MAIN/Python_OTO_COMMIT/
 
 # 3. Repo'yu indirme
 echo "Repo'yu indiriyorum..."
-git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git ~/github/MAIN/Python_OTO_COMMIT
+git clone https://github.com/OmerFaruk-Celik/Python_OTO_COMMIT.git ~/github/MAIN/Python_OTO_COMMIT/
 
 # 4. repo.py dosyasını /usr/bin/repo'ya kopyalama
 
