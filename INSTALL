@@ -67,4 +67,4 @@ echo "Daha sonra script'i çalıştırın."
 #cd ..
 #rm -rf ./Python_OTO_COMMIT
 echo "INSTALL işlemi tamamlandı! terminale repo yazarak kullanıcı arayüzüne ulaşabilirsiniz."
-repo
+grepo
