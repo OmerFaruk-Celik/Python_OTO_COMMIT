@@ -138,7 +138,7 @@ def generate_rsa():
         try:
             # Ev dizini ile github klasörünü birleştirin
             keygen_dosyasi = os.path.join(os.path.expanduser("~"), "github", "MAIN","Python_OTO_COMMIT", "keygen.py")
-            subprocess.run(["python", keygen_dosyasi])
+            subprocess.run(["python3", keygen_dosyasi])
             # RSA değerini güncellemek için update_rsa_text()'i çağırın
             update_rsa_text()
             messagebox.showinfo("Bilgi", "RSA anahtarı oluşturuldu.")
