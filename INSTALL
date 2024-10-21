@@ -5,7 +5,7 @@ chmod +x "$0"
 sudo git config --system core.longpaths true
 sudo git config --global core.protectNTFS false
 sudo apt-get install python3-tk
-sudo apt-get install xclip xselect
+sudo apt-get install xclip
 
 # 1. Gerekli Python paketlerini yükleme
 echo "Gerekli Python paketlerini indiriyorum..."
