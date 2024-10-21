@@ -603,6 +603,39 @@ def show_repo_details():
 
 
 
+
+def check_and_set_git_config(email,username):
+    # Kullanıcı adını ve email adresini kontrol et
+    try:
+        user_name = subprocess.run(
+            ['git', 'config', '--global', 'user.name'],
+            capture_output=True, text=True, check=True
+        ).stdout.strip()
+
+        user_email = subprocess.run(
+            ['git', 'config', '--global', 'user.email'],
+            capture_output=True, text=True, check=True
+        ).stdout.strip()
+
+    except subprocess.CalledProcessError:
+        user_name = ''
+        user_email = ''
+
+    # Kullanıcı adı ve email adresi eksikse ayarla
+    if not user_name:
+        print("Git kullanıcı adı ayarlanmamış. Ayarlanıyor...")
+        subprocess.run(['git', 'config', '--global', 'user.name', username])
+
+    if not user_email:
+        print("Git e-posta adresi ayarlanmamış. Ayarlanıyor...")
+        subprocess.run(['git', 'config', '--global', 'user.email', email])
+
+    # Kullanıcı adı ve emaili ekrana yazdır
+    print(f"Kullanıcı adı: {user_name if user_name else 'Ayarlanmış değil'}")
+    print(f"E-posta adresi: {user_email if user_email else 'Ayarlanmış değil'}")
+
+
+
         
 
 calisma_dizini = os.path.join(os.path.expanduser("~"), "github")
@@ -739,6 +772,13 @@ geri_button.grid(row=10,column=1, padx=5, pady=5)
 # RSA Durum Label'ı
 rsa_status_label = tk.Label(user_frame, text="", foreground="black", bg="#f0f0f0")
 rsa_status_label.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
+
+
+#Başlangıçta username ve email kontrol et
+with open(bilgiler_dosyasi, "r") as f:
+            username, email, token = f.readline().strip().split(",")
+
+check_and_set_git_config(email,username)
 
 # Başlangıçta repo listesini güncelle
 update_repo_list()
