@@ -110,9 +110,9 @@ def create_project():
                 with open("requirements.txt", "w") as f:
                     f.write("requests\n")
 
-            if not os.path.exists(".gitignore"):
-                with open(".gitignore", "w") as f:
-                    f.write("venv/\n")
+            #if not os.path.exists(".gitignore"):
+            #    with open(".gitignore", "w") as f:
+            #        f.write("venv/\n")
 
             if not os.path.exists("README.md"):
                 with open("README.md", "w") as f:
