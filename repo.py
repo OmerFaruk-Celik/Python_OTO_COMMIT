@@ -101,18 +101,22 @@ def create_project():
             subprocess.run(["git", "clone", f"git@github.com:{username}/{repo_name}.git"])
             os.chdir(repo_name)
 
-            # Dosyalar oluştur
-            with open("main.py", "w") as f:
-                f.write("# Bu Python projesinin ana dosyası\n")
+            # Dosyalar oluştur (varsa oluşturma)
+            if not os.path.exists("main.py"):
+                with open("main.py", "w") as f:
+                    f.write("# Bu Python projesinin ana dosyası\n")
 
-            with open("requirements.txt", "w") as f:
-                f.write("requests\n")
+            if not os.path.exists("requirements.txt"):
+                with open("requirements.txt", "w") as f:
+                    f.write("requests\n")
 
-            with open(".gitignore", "w") as f:
-                f.write("venv/\n")
+            if not os.path.exists(".gitignore"):
+                with open(".gitignore", "w") as f:
+                    f.write("venv/\n")
 
-            with open("README.md", "w") as f:
-                f.write("# Python Projem\n")
+            if not os.path.exists("README.md"):
+                with open("README.md", "w") as f:
+                    f.write("#The project folder has been created successfully.")
 
             print(f"{repo_name} adlı proje klasörü başarıyla oluşturuldu.")
 
