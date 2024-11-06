@@ -110,9 +110,9 @@ def create_project():
                 with open("requirements.txt", "w") as f:
                     f.write("requests\n")
 
-            #if not os.path.exists(".gitignore"):
-            #    with open(".gitignore", "w") as f:
-            #        f.write("venv/\n")
+            if not os.path.exists(".gitignore"):
+                with open(".gitignore", "w") as f:
+                    f.write("venv/\n")
 
             if not os.path.exists("README.md"):
                 with open("README.md", "w") as f:
@@ -639,6 +639,16 @@ def check_and_set_git_config(email,username):
     print(f"E-posta adresi: {user_email if user_email else 'Ayarlanmış değil'}")
 
 
+
+
+# Git kimlik doğrulama yöntemi ayarlaması
+def configure_git_credentials():
+    # Git global credential helper ayarını yap
+    subprocess.run(["git", "config", "--global", "credential.helper", "store"])
+    print("Git kimlik doğrulama yöntemi ayarlandı.")
+
+# Yalnızca ilk çalıştırmada kimlik doğrulama ayarını yapın
+#configure_git_credentials()
 
         
 
